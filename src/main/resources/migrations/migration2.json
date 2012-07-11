@@ -1,0 +1,441 @@
+{
+    "topic_types": [
+        {
+            "value": "NutzerIn",
+            "uri": "dm4.eduzen.identity",
+            "data_type_uri": "dm4.core.composite",
+            "assoc_defs": [
+                {
+                    "part_topic_type_uri":  "dm4.contacts.person_name",
+                    "part_cardinality_uri": "dm4.core.one",
+                    "assoc_type_uri":       "dm4.core.composition_def"
+                }, {
+                    "part_topic_type_uri":  "dm4.contacts.address_entry",
+                    "part_cardinality_uri": "dm4.core.many",
+                    "assoc_type_uri":       "dm4.core.composition_def"
+                },
+            ], "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.icon": "/de.deepamehta.eduzen/images/gnome_stock_person.png",
+                        "dm4.webclient.add_to_create_menu": true,
+                        "dm4.webclient.is_searchable_unit": true
+                    }
+                }
+            ], "label_config": [
+                "dm4.contacts.person_name"
+            ]
+        },
+        {
+            "value": "Themenkomplex",
+            "uri": "dm4.eduzen.topicalarea",
+            "data_type_uri": "dm4.core.composite",
+            "assoc_defs": [
+                {
+                    "part_topic_type_uri":  "dm4.eduzen.topicalarea.name",
+                    "part_cardinality_uri": "dm4.core.one",
+                    "assoc_type_uri":       "dm4.core.composition_def"
+                }, {
+                    "part_topic_type_uri":  "dm4.eduzen.topicalarea.alias",
+                    "part_cardinality_uri": "dm4.core.many",
+                    "assoc_type_uri":       "dm4.core.composition_def"
+                }
+            ], "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.color": "#b500ff",
+                        "dm4.webclient.add_to_create_menu": true,
+                        "dm4.webclient.is_searchable_unit": true
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Kurs",
+            "uri": "dm4.eduzen.course",
+            "data_type_uri": "dm4.core.composite",
+            "assoc_defs": [
+                {
+                    "part_topic_type_uri":   "dm4.eduzen.place",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                }, {
+                    "part_topic_type_uri":   "dm4.eduzen.timeframe.begin",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                }, {
+                    "part_topic_type_uri":   "dm4.eduzen.timeframe.end",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                }
+            ], "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.icon": "/de.deepamehta.eduzen/images/Icon_Kurs.png",
+                        "dm4.webclient.add_to_create_menu": true,
+                        "dm4.webclient.is_searchable_unit": true
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Kurskonzept",
+            "uri": "dm4.eduzen.courseidea",
+            "data_type_uri": "dm4.core.composite",
+            "assoc_defs": [
+                {
+                    "part_topic_type_uri":   "dm4.eduzen.courseidea.name",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                }, {
+                  "part_topic_type_uri":    "dm4.eduzen.topicalarea",
+                  "part_cardinality_uri":   "dm4.core.many",
+                  "whole_cardinality_uri":  "dm4.core.many",
+                  "assoc_type_uri":         "dm4.core.aggregation_def",
+                  "view_config_topics": [
+                        {
+                            "type_uri": "dm4.webclient.view_config",
+                            "composite": {
+                                "dm4.webclient.editable": false
+                            }
+                        }
+                    ]
+                }, {
+                  "part_topic_type_uri":    "dm4.eduzen.course",
+                  "part_cardinality_uri":   "dm4.core.many",
+                  "whole_cardinality_uri":  "dm4.core.one",
+                  "assoc_type_uri":         "dm4.core.composition_def",
+                  "view_config_topics": [
+                        {
+                            "type_uri": "dm4.webclient.view_config",
+                            "composite": {
+                                "dm4.webclient.editable": false
+                            }
+                        }
+                    ]
+                }
+            ], "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.color": "#ff994a",
+                        "dm4.webclient.add_to_create_menu": true,
+                        "dm4.webclient.is_searchable_unit": true
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Modul",
+            "uri": "dm4.eduzen.module",
+            "data_type_uri": "dm4.core.composite",
+            "assoc_defs": [
+                {
+                    "part_topic_type_uri":   "dm4.eduzen.module.name",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                }, {
+                    "part_topic_type_uri":      "dm4.eduzen.courseidea",
+                    "part_cardinality_uri":     "dm4.core.many",
+                    "whole_cardinality_uri":    "dm4.core.many",
+                    "assoc_type_uri":           "dm4.core.aggregation_def",
+                    "view_config_topics": [
+                        {
+                            "type_uri": "dm4.webclient.view_config",
+                            "composite": {
+                                "dm4.webclient.editable": false
+                            }
+                        }
+                    ]
+                }
+            ], "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.icon": "/de.deepamehta.eduzen/images/Icon_Modul.png",
+                        "dm4.webclient.add_to_create_menu": true,
+                        "dm4.webclient.is_searchable_unit": true
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Studiengang",
+            "uri": "dm4.eduzen.studypath",
+            "data_type_uri": "dm4.core.composite",
+            "assoc_defs": [
+                {
+                    "part_topic_type_uri":   "dm4.eduzen.studypath.name",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                }, {
+                    "part_topic_type_uri":      "dm4.eduzen.module",
+                    "part_cardinality_uri":     "dm4.core.many",
+                    "whole_cardinality_uri":    "dm4.core.many",
+                    "assoc_type_uri":           "dm4.core.aggregation_def",
+                    "view_config_topics": [
+                        {
+                            "type_uri": "dm4.webclient.view_config",
+                            "composite": {
+                                "dm4.webclient.editable": false
+                            }
+                        }
+                    ]
+                }
+            ], "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.icon": "/de.deepamehta.eduzen/images/Icon_Studiengang.png",
+                        "dm4.webclient.add_to_create_menu": true,
+                        "dm4.webclient.is_searchable_unit": true,
+                        "dm4.webclient.editable": true,
+                        "dm4.webclient.viewable": true
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Inhalt",
+            "uri": "dm4.eduzen.content",
+            "data_type_uri": "dm4.core.composite",
+            "assoc_defs": [
+                {
+                    "part_topic_type_uri":   "dm4.eduzen.content.name",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                },
+                {
+                    "part_topic_type_uri":   "dm4.eduzen.content.content",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                }
+            ], "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.icon": "/de.deepamehta.eduzen/images/Icon_Inhalt.png",
+                        "dm4.webclient.add_to_create_menu": true,
+                        "dm4.webclient.is_searchable_unit": true
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Kommentar",
+            "uri": "dm4.eduzen.remark",
+            "data_type_uri": "dm4.core.composite",
+            "assoc_defs": [
+                {
+                    "part_topic_type_uri":   "dm4.eduzen.remark.correct",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                }, {
+                    "part_topic_type_uri":   "dm4.eduzen.remark.explanation",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                }
+            ], "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.icon": "/de.deepamehta.eduzen/images/Icon_Kommentar.png",
+                        "dm4.webclient.add_to_create_menu": true,
+                        "dm4.webclient.is_searchable_unit": true
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Lösung",
+            "uri": "dm4.eduzen.suggestion",
+            "data_type_uri": "dm4.core.composite",
+            "assoc_defs": [
+                {
+                    "part_topic_type_uri":   "dm4.eduzen.suggestion.content",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                },
+                {
+                    "part_topic_type_uri":   "dm4.eduzen.remark",
+                    "part_cardinality_uri":  "dm4.core.many",
+                    "assoc_type_uri":        "dm4.core.composition_def",
+                    "view_config_topics": [
+                        {
+                            "type_uri": "dm4.webclient.view_config",
+                            "composite": {
+                                "dm4.webclient.editable": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "part_topic_type_uri":   "dm4.eduzen.timeframe.note",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def",
+                    "view_config_topics": [
+                        {
+                            "type_uri": "dm4.webclient.view_config",
+                            "composite": {
+                                "dm4.webclient.editable": false
+                            }
+                        }
+                    ]
+                },
+                {
+                    "part_topic_type_uri":   "dm4.eduzen.suggestion.master",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def",
+                    "view_config_topics": [
+                        {
+                            "type_uri": "dm4.webclient.view_config",
+                            "composite": {
+                                "dm4.webclient.editable": false
+                            }
+                        }
+                    ]
+                }
+            ], "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.icon": "/de.deepamehta.eduzen/images/Icon_Loesung.png",
+                        "dm4.webclient.add_to_create_menu": true,
+                        "dm4.webclient.is_searchable_unit": true
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Aufgabe",
+            "uri": "dm4.eduzen.task",
+            "data_type_uri": "dm4.core.composite",
+            "assoc_defs": [
+                {
+                    "part_topic_type_uri":   "dm4.eduzen.task.formulation",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                }, {
+                    "part_topic_type_uri":   "dm4.eduzen.task.content",
+                    "part_cardinality_uri":  "dm4.core.many",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                }, {
+                    "part_topic_type_uri":   "dm4.eduzen.task.difficulcy",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                }, {
+                    "part_topic_type_uri":   "dm4.eduzen.timeframe.note",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def",
+                    "view_config_topics": [
+                        {
+                            "type_uri": "dm4.webclient.view_config",
+                            "composite": {
+                                "dm4.webclient.editable": false
+                            }
+                        }
+                    ]
+                }, {
+                    "part_topic_type_uri":   "dm4.eduzen.suggestion",
+                    "part_cardinality_uri":  "dm4.core.many",
+                    "assoc_type_uri":        "dm4.core.composition_def",
+                    "view_config_topics": [
+                        {
+                            "type_uri": "dm4.webclient.view_config",
+                            "composite": {
+                                "dm4.webclient.editable": false
+                            }
+                        }
+                    ]
+                }
+            ], "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.icon": "/de.deepamehta.eduzen/images/Icon_Aufgabe.png",
+                        "dm4.webclient.add_to_create_menu": true,
+                        "dm4.webclient.is_searchable_unit": true
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Übungszettel",
+            "uri": "dm4.eduzen.taskset",
+            "data_type_uri": "dm4.core.composite",
+            "assoc_defs": [
+                {
+                    "part_topic_type_uri":   "dm4.eduzen.taskset.due",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                }, {
+                    "part_topic_type_uri":      "dm4.eduzen.task",
+                    "part_cardinality_uri":     "dm4.core.many",
+                    "whole_cardinality_uri":    "dm4.core.many",
+                    "assoc_type_uri":           "dm4.core.aggregation_def",
+                    "view_config_topics": [
+                        {
+                            "type_uri": "dm4.webclient.view_config",
+                            "composite": {
+                                "dm4.webclient.editable": false
+                            }
+                        }
+                    ]
+                }
+            ], "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.icon": "/de.deepamehta.eduzen/images/Icon_Uebungszettel.png",
+                        "dm4.webclient.add_to_create_menu": true,
+                        "dm4.webclient.is_searchable_unit": true
+                    }
+                }
+            ]
+        }
+    ], "assoc_types": [
+        {
+            "value": "Content",
+            "uri": "dm4.eduzen.content_item",
+            "data_type_uri": "dm4.core.text",
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.color": "#FFC700"
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Origin",
+            "uri": "dm4.eduzen.origin_item",
+            "data_type_uri": "dm4.core.text",
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.color": "#3d3d3d"
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Requirement",
+            "uri": "dm4.eduzen.requirement",
+            "data_type_uri": "dm4.core.text",
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.color": "#12B4D7"
+                    }
+                }
+            ]
+            
+        }
+    ]
+}
