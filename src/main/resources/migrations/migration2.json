@@ -82,7 +82,7 @@
             ]
         },
         {
-            "value": "Kurskonzept",
+            "value": "Kursidee",
             "uri": "dm4.eduzen.courseidea",
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [

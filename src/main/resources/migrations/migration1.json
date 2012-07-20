@@ -128,7 +128,18 @@
             "value": "Aufgabe",
             "uri": "dm4.eduzen.task.content",
             "data_type_uri": "dm4.core.html",
-            "index_mode_uris": ["dm4.core.fulltext"]
+            "index_mode_uris": ["dm4.core.fulltext"],
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.simple_renderer_uri": "dm4.eduzen.task.content_field_renderer",
+                        "dm4.webclient.add_to_create_menu": false,
+                        "dm4.webclient.is_searchable_unit": false,
+                        "dm4.webclient.rows": 4
+                    }
+                }
+            ]
         },
         {
             "value": "Schwierigkeitsstufe",
@@ -159,7 +170,18 @@
             "value": "Lösungsvorschlag",
             "uri": "dm4.eduzen.suggestion.content",
             "data_type_uri": "dm4.core.html",
-            "index_mode_uris": ["dm4.core.fulltext"]
+            "index_mode_uris": ["dm4.core.fulltext"],
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.simple_renderer_uri": "dm4.eduzen.task.content_field_renderer",
+                        "dm4.webclient.add_to_create_menu": false,
+                        "dm4.webclient.is_searchable_unit": false,
+                        "dm4.webclient.rows": 4
+                    }
+                }
+            ]
         },
         {
             "value": "Musterlösung",
