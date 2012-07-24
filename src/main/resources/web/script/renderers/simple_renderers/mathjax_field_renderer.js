@@ -2,10 +2,16 @@
 dm4c.add_simple_renderer('dm4.eduzen.task.content_field_renderer', {
 
     render_info: function(model, $parent) {
+        // 
+        if (typeof(model) == "object") {
+            var value = model.value
+        } else {
+            var value = model
+        }
         // render label
         dm4c.render.field_label(model, $parent)
         var html = '<div class="task content" id="content" style="border: 1px solid #e8e8e8;">'
-            + '<div id="math-output" class="output">' + model.value + '</div>'
+            + '<div id="math-output" class="output">' + value + '</div>'
             + '</div>'
         $parent.append(html)
         // interpret just math in div#math-output
@@ -26,7 +32,15 @@ dm4c.add_simple_renderer('dm4.eduzen.task.content_field_renderer', {
         var $content = $('<textarea id="math-input" type="text" rows="4">').attr({ value : value, size : 80 })
         //
         $parent.append($content)
-        //
+        var html = '<div class="task content preview" id="content" style="border: 1px solid #e8e8e8;">Vorschau<br/>'
+            + '<div id="math-output" class="output">' + value + '</div>'
+            + '</div>'
+        $parent.append(html)
+        // register keyup-handler on math-input field
+        $('#math-input').keyup(function () {
+            $("#math-output").text($('#math-input').val())
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub, "math-output"])
+        })
         return function() { // return input value
             return $.trim($content.val())
         }

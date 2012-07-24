@@ -8,10 +8,10 @@ dm4c.add_plugin("de.deepamehta.eduzen", function() {
     // define type specific commands and register them
     dm4c.add_listener('init', function (e) {
         // say hello to
-        console.log("EduZEN.init(Tasks and suggestions with MathJax) ... ")
-        // ### the workaround to load all important mathjax stuff, except the one file above^^
-        MathJax.Ajax.config.root = "http://localhost:8080/de.deepamehta.eduzen/script/vendor/mathjax"
-        console.log("   > new MathJax.Ajax.config.root => " + MathJax.Ajax.config.root)
+        console.log("EduZEN-Plugin.initializing(0.1.0-SNAPSHOT) ... ")
+        // ### the workaround to load all important mathjax stuff, except the one file commented above^^
+        MathJax.Ajax.config.root = "http://"+ window.location.host + "/de.deepamehta.eduzen/script/vendor/mathjax"
+        console.log("   > new MathJax.Ajax.config.root => " + MathJax.Ajax.config.root) // ff does not know w.l.origin
         // 
         MathJax.Hub.Config({
             config: ["MMLorHTML.js"],
