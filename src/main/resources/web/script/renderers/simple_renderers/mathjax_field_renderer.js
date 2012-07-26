@@ -21,7 +21,7 @@ dm4c.add_simple_renderer('dm4.eduzen.task.content_field_renderer', {
         // --------------- "Update", "Typeset", "Process"
     },
 
-    // ### unique dom-ids, e.g. if form_generator has 2 field renderer of type mathjax_field_renderer
+    // ### support multiple form_renderer elements in one page-panel through unique dom-ids and/or class selector
     render_form: function(model, $parent) {
         //
         if (typeof(model) == "object") {
@@ -29,7 +29,6 @@ dm4c.add_simple_renderer('dm4.eduzen.task.content_field_renderer', {
         } else {
             var value = model
         }
-        // #### $('#math-input').unbind() // free DOMElement of all event listeners dm4-webclient may did register
         var $content = $('<textarea id="math-input" type="text" rows="4">').attr({ value : value, size : 80 })
         //
         $parent.append($content)
