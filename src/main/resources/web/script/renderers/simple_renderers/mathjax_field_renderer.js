@@ -21,6 +21,7 @@ dm4c.add_simple_renderer('dm4.eduzen.task.content_field_renderer', {
         // --------------- "Update", "Typeset", "Process"
     },
 
+    // ### unique dom-ids, e.g. if form_generator has 2 field renderer of type mathjax_field_renderer
     render_form: function(model, $parent) {
         //
         if (typeof(model) == "object") {
@@ -32,7 +33,8 @@ dm4c.add_simple_renderer('dm4.eduzen.task.content_field_renderer', {
         var $content = $('<textarea id="math-input" type="text" rows="4">').attr({ value : value, size : 80 })
         //
         $parent.append($content)
-        var html = '<div class="task content preview" id="content" style="border: 1px solid #e8e8e8;">Vorschau<br/>'
+        dm4c.render.field_label("Vorschau", $parent)
+        var html = '<div class="task content preview" id="content" style="border: 1px solid #e8e8e8;">'
             + '<div id="math-output" class="output">' + value + '</div>'
             + '</div>'
         $parent.append(html)

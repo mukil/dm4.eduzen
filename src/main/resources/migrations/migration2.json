@@ -1,7 +1,7 @@
 {
     "topic_types": [
         {
-            "value": "NutzerIn",
+            "value": "Identity",
             "uri": "dm4.eduzen.identity",
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
@@ -28,7 +28,7 @@
             ]
         },
         {
-            "value": "Themenkomplex",
+            "value": "Topical Area",
             "uri": "dm4.eduzen.topicalarea",
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
@@ -53,7 +53,7 @@
             ]
         },
         {
-            "value": "Kurs",
+            "value": "Lecture",
             "uri": "dm4.eduzen.course",
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
@@ -61,14 +61,22 @@
                     "part_topic_type_uri":   "dm4.eduzen.place",
                     "part_cardinality_uri":  "dm4.core.one",
                     "assoc_type_uri":        "dm4.core.composition_def"
-                }, {
+                },
+                {
                     "part_topic_type_uri":   "dm4.eduzen.timeframe.begin",
                     "part_cardinality_uri":  "dm4.core.one",
                     "assoc_type_uri":        "dm4.core.composition_def"
-                }, {
+                },
+                {
                     "part_topic_type_uri":   "dm4.eduzen.timeframe.end",
                     "part_cardinality_uri":  "dm4.core.one",
                     "assoc_type_uri":        "dm4.core.composition_def"
+                },
+                {
+                    "part_topic_type_uri":    "dm4.eduzen.lecture.type",
+                    "part_cardinality_uri":   "dm4.core.many",
+                    "whole_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":         "dm4.core.aggregation_def"
                 }
             ], "view_config_topics": [
                 {
@@ -82,7 +90,7 @@
             ]
         },
         {
-            "value": "Kursidee",
+            "value": "Course",
             "uri": "dm4.eduzen.courseidea",
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
@@ -90,7 +98,14 @@
                     "part_topic_type_uri":   "dm4.eduzen.courseidea.name",
                     "part_cardinality_uri":  "dm4.core.one",
                     "assoc_type_uri":        "dm4.core.composition_def"
-                }, {
+                },
+                {
+                    "part_topic_type_uri":    "dm4.eduzen.courseidea.type",
+                    "part_cardinality_uri":   "dm4.core.one",
+                    "whole_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":         "dm4.core.aggregation_def"
+                },
+                {
                   "part_topic_type_uri":    "dm4.eduzen.topicalarea",
                   "part_cardinality_uri":   "dm4.core.many",
                   "whole_cardinality_uri":  "dm4.core.many",
@@ -103,7 +118,8 @@
                             }
                         }
                     ]
-                }, {
+                },
+                {
                   "part_topic_type_uri":    "dm4.eduzen.course",
                   "part_cardinality_uri":   "dm4.core.many",
                   "whole_cardinality_uri":  "dm4.core.one",
@@ -129,7 +145,7 @@
             ]
         },
         {
-            "value": "Modul",
+            "value": "Module",
             "uri": "dm4.eduzen.module",
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
@@ -163,7 +179,7 @@
             ]
         },
         {
-            "value": "Studiengang",
+            "value": "Study path",
             "uri": "dm4.eduzen.studypath",
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
@@ -199,7 +215,7 @@
             ]
         },
         {
-            "value": "Inhalt",
+            "value": "Resource",
             "uri": "dm4.eduzen.content",
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
@@ -225,7 +241,7 @@
             ]
         },
         {
-            "value": "Kommentar",
+            "value": "Comment",
             "uri": "dm4.eduzen.remark",
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
@@ -250,7 +266,7 @@
             ]
         },
         {
-            "value": "Lösung",
+            "value": "Try",
             "uri": "dm4.eduzen.suggestion",
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
@@ -310,7 +326,7 @@
             ]
         },
         {
-            "value": "Aufgabe",
+            "value": "Excercise",
             "uri": "dm4.eduzen.task",
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
@@ -363,7 +379,7 @@
             ]
         },
         {
-            "value": "Übungszettel",
+            "value": "Practice sheet",
             "uri": "dm4.eduzen.taskset",
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
@@ -405,7 +421,7 @@
                 {
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
-                        "dm4.webclient.color": "#FFC700"
+                        "dm4.webclient.color": "#0067c7"
                     }
                 }
             ]
@@ -424,6 +440,84 @@
             ]
         },
         {
+            "value": "Participant",
+            "uri": "dm4.eduzen.participant",
+            "data_type_uri": "dm4.core.text",
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.color": "#000000"
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Lecturer",
+            "uri": "dm4.eduzen.lecturer",
+            "data_type_uri": "dm4.core.text",
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.color": "#44994a"
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Submitter",
+            "uri": "dm4.eduzen.submitter",
+            "data_type_uri": "dm4.core.text",
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.color": "#99cc00"
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Author",
+            "uri": "dm4.eduzen.author",
+            "data_type_uri": "dm4.core.text",
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.color": "#ff9c63"
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Hint",
+            "uri": "dm4.eduzen.hint",
+            "data_type_uri": "dm4.core.text",
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.color": "#ffff4d"
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Corrector",
+            "uri": "dm4.eduzen.corrector",
+            "data_type_uri": "dm4.core.text",
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.color": "#cc00ff"
+                    }
+                }
+            ]
+        },
+        {
             "value": "Requirement",
             "uri": "dm4.eduzen.requirement",
             "data_type_uri": "dm4.core.text",
@@ -432,6 +526,20 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.color": "#12B4D7"
+                    }
+                }
+            ]
+            
+        },
+        {
+            "value": "Unknown",
+            "uri": "dm4.eduzen.unknown",
+            "data_type_uri": "dm4.core.text",
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.color": "#ffc700"
                     }
                 }
             ]

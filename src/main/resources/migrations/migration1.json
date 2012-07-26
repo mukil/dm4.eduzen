@@ -1,7 +1,7 @@
 {
     "topic_types": [
         {
-            "value": "Studiengang Name",
+            "value": "Studypath Name",
             "uri": "dm4.eduzen.studypath.name",
             "data_type_uri": "dm4.core.text", 
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
@@ -15,7 +15,7 @@
             ]
         },
         {
-            "value": "Modul Name",
+            "value": "Module Name",
             "uri": "dm4.eduzen.module.name",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
@@ -29,7 +29,7 @@
             ]
         },
         {
-            "value": "Themenkomplex Name",
+            "value": "Topical Area Name",
             "uri": "dm4.eduzen.topicalarea.name",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
@@ -43,7 +43,7 @@
             ]
         },
         {
-            "value": "Themenkomplex Alias",
+            "value": "Topical Area Alias",
             "uri": "dm4.eduzen.topicalarea.alias",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
@@ -57,7 +57,7 @@
             ]
         },
         {
-            "value": "Name der Kursidee",
+            "value": "Course Name",
             "uri": "dm4.eduzen.courseidea.name",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
@@ -71,7 +71,7 @@
             ]
         },
         {
-            "value": "Art des Kurses",
+            "value": "Course Type",
             "uri": "dm4.eduzen.courseidea.type",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
@@ -85,7 +85,21 @@
             ]
         },
         {
-            "value": "Veranstaltungsort",
+            "value": "Lecture Type",
+            "uri": "dm4.eduzen.lecture.type",
+            "data_type_uri": "dm4.core.text",
+            "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.rows": 1
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Place of Lecture",
             "uri": "dm4.eduzen.place",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
@@ -99,7 +113,7 @@
             ]
         },
         {
-            "value": "Name des Inhalts",
+            "value": "Resource Name",
             "uri": "dm4.eduzen.content.name",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
@@ -113,19 +127,19 @@
             ]
         },
         {
-            "value": "Inhalt",
+            "value": "Resource",
             "uri": "dm4.eduzen.content.content",
             "data_type_uri": "dm4.core.html",
             "index_mode_uris": ["dm4.core.fulltext"]
         },
         {
-            "value": "Fragestellung",
+            "value": "Issue",
             "uri": "dm4.eduzen.task.formulation",
             "data_type_uri": "dm4.core.html",
             "index_mode_uris": ["dm4.core.fulltext"]
         },
         {
-            "value": "Aufgabe",
+            "value": "Excercise Content",
             "uri": "dm4.eduzen.task.content",
             "data_type_uri": "dm4.core.html",
             "index_mode_uris": ["dm4.core.fulltext"],
@@ -142,32 +156,32 @@
             ]
         },
         {
-            "value": "Schwierigkeitsstufe",
+            "value": "Difficulcy",
             "uri": "dm4.eduzen.task.difficulcy",
             "data_type_uri": "dm4.core.number"
         },
         {
-            "value": "Bearbeitungszeit",
+            "value": "Working time",
             "uri": "dm4.eduzen.timeframe.note",
             "data_type_uri": "dm4.core.text"
         },
         {
-            "value": "Bearbeitungsbeginn",
+            "value": "Start",
             "uri": "dm4.eduzen.timeframe.begin",
             "data_type_uri": "dm4.core.text"
         },
         {
-            "value": "Bearbeitungsende",
+            "value": "Ends",
             "uri": "dm4.eduzen.timeframe.end",
             "data_type_uri": "dm4.core.text"
         },
         {
-            "value": "Abgabetermin",
+            "value": "Due",
             "uri": "dm4.eduzen.taskset.due",
             "data_type_uri": "dm4.core.number"
         },
         {
-            "value": "Lösungsvorschlag",
+            "value": "Try",
             "uri": "dm4.eduzen.suggestion.content",
             "data_type_uri": "dm4.core.html",
             "index_mode_uris": ["dm4.core.fulltext"],
@@ -184,46 +198,72 @@
             ]
         },
         {
-            "value": "Musterlösung",
+            "value": "Mastertry",
             "uri": "dm4.eduzen.suggestion.master",
             "data_type_uri": "dm4.core.boolean"
         },
         {
-            "value": "Korrekt",
+            "value": "Correct",
             "uri": "dm4.eduzen.remark.correct",
             "data_type_uri": "dm4.core.boolean"
         },
         {
-            "value": "Erläuterung",
+            "value": "Explanation",
             "uri": "dm4.eduzen.remark.explanation",
             "data_type_uri": "dm4.core.html",
-            "index_mode_uris": ["dm4.core.fulltext"]
+            "index_mode_uris": ["dm4.core.fulltext"],
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.simple_renderer_uri": "dm4.eduzen.task.content_field_renderer",
+                        "dm4.webclient.add_to_create_menu": false,
+                        "dm4.webclient.is_searchable_unit": false,
+                        "dm4.webclient.rows": 4
+                    }
+                }
+            ]
         }
     ],
     "topics": [
         {
-            "value": "Vorlesung",
+            "value": "Lecture",
             "uri": "dm4.eduzen.lecture",
-            "type_uri": "dm4.eduzen.courseidea.type"
+            "type_uri": "dm4.eduzen.lecture.type"
         },
         {
             "value": "Seminar",
             "uri": "dm4.eduzen.seminar",
-            "type_uri": "dm4.eduzen.courseidea.type"
+            "type_uri": "dm4.eduzen.lecture.type"
         },
         {
-            "value": "Übung",
+            "value": "Tutorium",
             "uri": "dm4.eduzen.tutorial",
-            "type_uri": "dm4.eduzen.courseidea.type"
+            "type_uri": "dm4.eduzen.lecture.type"
         },
         {
-            "value": "Praktikum",
+            "value": "Big Tutorium",
+            "uri": "dm4.eduzen.big_tutorium",
+            "type_uri": "dm4.eduzen.lecture.type"
+        },
+        {
+            "value": "Practice",
             "uri": "dm4.eduzen.practice",
+            "type_uri": "dm4.eduzen.lecture.type"
+        },
+        {
+            "value": "Free",
+            "uri": "dm4.eduzen.freecourse",
             "type_uri": "dm4.eduzen.courseidea.type"
         },
         {
-            "value": "freier Wahlbereich",
-            "uri": "dm4.eduzen.freecourse",
+            "value": "Obligatory",
+            "uri": "dm4.eduzen.obligatory",
+            "type_uri": "dm4.eduzen.courseidea.type"
+        },
+        {
+            "value": "Elective",
+            "uri": "dm4.eduzen.elective",
             "type_uri": "dm4.eduzen.courseidea.type"
         },
         {
