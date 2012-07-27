@@ -2,7 +2,7 @@
     "topic_types": [
         {
             "value": "Studypath Name",
-            "uri": "dm4.eduzen.studypath.name",
+            "uri": "tub.eduzen.studypath_name",
             "data_type_uri": "dm4.core.text", 
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
             "view_config_topics": [
@@ -16,7 +16,7 @@
         },
         {
             "value": "Module Name",
-            "uri": "dm4.eduzen.module.name",
+            "uri": "tub.eduzen.module_name",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
             "view_config_topics": [
@@ -30,7 +30,7 @@
         },
         {
             "value": "Topical Area Name",
-            "uri": "dm4.eduzen.topicalarea.name",
+            "uri": "tub.eduzen.topicalarea_name",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
             "view_config_topics": [
@@ -44,7 +44,7 @@
         },
         {
             "value": "Topical Area Alias",
-            "uri": "dm4.eduzen.topicalarea.alias",
+            "uri": "tub.eduzen.topicalarea_alias",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
             "view_config_topics": [
@@ -58,7 +58,7 @@
         },
         {
             "value": "Course Name",
-            "uri": "dm4.eduzen.courseidea.name",
+            "uri": "tub.eduzen.course_name",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
             "view_config_topics": [
@@ -72,7 +72,7 @@
         },
         {
             "value": "Course Type",
-            "uri": "dm4.eduzen.courseidea.type",
+            "uri": "tub.eduzen.course_type",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
             "view_config_topics": [
@@ -86,7 +86,21 @@
         },
         {
             "value": "Lecture Type",
-            "uri": "dm4.eduzen.lecture.type",
+            "uri": "tub.eduzen.lecture_type",
+            "data_type_uri": "dm4.core.text",
+            "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.rows": 1
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Correctness",
+            "uri": "tub.eduzen.approach_correctness",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
             "view_config_topics": [
@@ -100,7 +114,7 @@
         },
         {
             "value": "Place of Lecture",
-            "uri": "dm4.eduzen.place",
+            "uri": "tub.eduzen.lecture_place",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
             "view_config_topics": [
@@ -114,7 +128,7 @@
         },
         {
             "value": "Resource Name",
-            "uri": "dm4.eduzen.content.name",
+            "uri": "tub.eduzen.resource_name",
             "data_type_uri": "dm4.core.text",
             "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
             "view_config_topics": [
@@ -128,26 +142,37 @@
         },
         {
             "value": "Resource",
-            "uri": "dm4.eduzen.content.content",
+            "uri": "tub.eduzen.resource_content",
             "data_type_uri": "dm4.core.html",
             "index_mode_uris": ["dm4.core.fulltext"]
         },
         {
-            "value": "Issue",
-            "uri": "dm4.eduzen.task.formulation",
-            "data_type_uri": "dm4.core.html",
-            "index_mode_uris": ["dm4.core.fulltext"]
-        },
-        {
-            "value": "Excercise Content",
-            "uri": "dm4.eduzen.task.content",
+            "value": "Excercise Description",
+            "uri": "tub.eduzen.excercise_description",
             "data_type_uri": "dm4.core.html",
             "index_mode_uris": ["dm4.core.fulltext"],
             "view_config_topics": [
                 {
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
-                        "dm4.webclient.simple_renderer_uri": "dm4.eduzen.task.content_field_renderer",
+                        "dm4.webclient.simple_renderer_uri": "tub.eduzen.mathjax_field_renderer",
+                        "dm4.webclient.add_to_create_menu": false,
+                        "dm4.webclient.is_searchable_unit": true,
+                        "dm4.webclient.rows": 4
+                    }
+                }
+            ]
+        },
+        {
+            "value": "Excercise Object",
+            "uri": "tub.eduzen.excercise_object",
+            "data_type_uri": "dm4.core.html",
+            "index_mode_uris": ["dm4.core.fulltext"],
+            "view_config_topics": [
+                {
+                    "type_uri": "dm4.webclient.view_config",
+                    "composite": {
+                        "dm4.webclient.simple_renderer_uri": "tub.eduzen.mathjax_field_renderer",
                         "dm4.webclient.add_to_create_menu": false,
                         "dm4.webclient.is_searchable_unit": false,
                         "dm4.webclient.rows": 4
@@ -157,39 +182,54 @@
         },
         {
             "value": "Difficulcy",
-            "uri": "dm4.eduzen.task.difficulcy",
+            "uri": "tub.eduzen.excercise_difficulcy",
             "data_type_uri": "dm4.core.number"
         },
         {
             "value": "Working time",
-            "uri": "dm4.eduzen.timeframe.note",
+            "uri": "tub.eduzen.timeframe_note",
             "data_type_uri": "dm4.core.text"
         },
         {
             "value": "Start",
-            "uri": "dm4.eduzen.timeframe.begin",
+            "uri": "tub.eduzen.timeframe_start",
             "data_type_uri": "dm4.core.text"
         },
         {
-            "value": "Ends",
-            "uri": "dm4.eduzen.timeframe.end",
+            "value": "End",
+            "uri": "tub.eduzen.timeframe_end",
             "data_type_uri": "dm4.core.text"
         },
         {
             "value": "Due",
-            "uri": "dm4.eduzen.taskset.due",
-            "data_type_uri": "dm4.core.number"
+            "uri": "tub.eduzen.practicesheet_due",
+            "data_type_uri": "dm4.core.text"
         },
         {
-            "value": "Try",
-            "uri": "dm4.eduzen.suggestion.content",
+            "value": "Given",
+            "uri": "tub.eduzen.practicesheet_given",
+            "data_type_uri": "dm4.core.text"
+        },
+        {
+            "value": "Frozen",
+            "uri": "tub.eduzen.excercise_frozen",
+            "data_type_uri": "dm4.core.boolean"
+        },
+        {
+            "value": "Archived",
+            "uri": "tub.eduzen.excercise_archived",
+            "data_type_uri": "dm4.core.boolean"
+        },
+        {
+            "value": "Approach",
+            "uri": "tub.eduzen.approach_content",
             "data_type_uri": "dm4.core.html",
             "index_mode_uris": ["dm4.core.fulltext"],
             "view_config_topics": [
                 {
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
-                        "dm4.webclient.simple_renderer_uri": "dm4.eduzen.task.content_field_renderer",
+                        "dm4.webclient.simple_renderer_uri": "tub.eduzen.mathjax_field_renderer",
                         "dm4.webclient.add_to_create_menu": false,
                         "dm4.webclient.is_searchable_unit": false,
                         "dm4.webclient.rows": 4
@@ -198,25 +238,25 @@
             ]
         },
         {
-            "value": "Mastertry",
-            "uri": "dm4.eduzen.suggestion.master",
+            "value": "Sample solution",
+            "uri": "tub.eduzen.approach_sample",
             "data_type_uri": "dm4.core.boolean"
         },
         {
             "value": "Correct",
-            "uri": "dm4.eduzen.remark.correct",
+            "uri": "tub.eduzen.comment_correct",
             "data_type_uri": "dm4.core.boolean"
         },
         {
             "value": "Explanation",
-            "uri": "dm4.eduzen.remark.explanation",
+            "uri": "tub.eduzen.comment_explanation",
             "data_type_uri": "dm4.core.html",
             "index_mode_uris": ["dm4.core.fulltext"],
             "view_config_topics": [
                 {
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
-                        "dm4.webclient.simple_renderer_uri": "dm4.eduzen.task.content_field_renderer",
+                        "dm4.webclient.simple_renderer_uri": "tub.eduzen.mathjax_field_renderer",
                         "dm4.webclient.add_to_create_menu": false,
                         "dm4.webclient.is_searchable_unit": false,
                         "dm4.webclient.rows": 4
@@ -227,53 +267,68 @@
     ],
     "topics": [
         {
+            "value": "Undecided",
+            "uri": "tub.eduzen.approach_undecided",
+            "type_uri": "tub.eduzen.approach_correctness"
+        },
+        {
+            "value": "Wrong",
+            "uri": "tub.eduzen.approach_wrong",
+            "type_uri": "tub.eduzen.approach_correctness"
+        },
+        {
+            "value": "Correct",
+            "uri": "tub.eduzen.approach_correct",
+            "type_uri": "tub.eduzen.approach_correctness"
+        },
+        {
             "value": "Lecture",
-            "uri": "dm4.eduzen.lecture",
-            "type_uri": "dm4.eduzen.lecture.type"
+            "uri": "tub.eduzen.lecture_lecture",
+            "type_uri": "tub.eduzen.lecture_type"
         },
         {
             "value": "Seminar",
-            "uri": "dm4.eduzen.seminar",
-            "type_uri": "dm4.eduzen.lecture.type"
+            "uri": "tub.eduzen.lecture_seminar",
+            "type_uri": "tub.eduzen.lecture_type"
         },
         {
             "value": "Tutorium",
-            "uri": "dm4.eduzen.tutorial",
-            "type_uri": "dm4.eduzen.lecture.type"
+            "uri": "tub.eduzen.lecture_tutorial",
+            "type_uri": "tub.eduzen.lecture_type"
         },
         {
             "value": "Big Tutorium",
-            "uri": "dm4.eduzen.big_tutorium",
-            "type_uri": "dm4.eduzen.lecture.type"
+            "uri": "tub.eduzen.lecture_big_tutorium",
+            "type_uri": "tub.eduzen.lecture_type"
         },
         {
             "value": "Practice",
-            "uri": "dm4.eduzen.practice",
-            "type_uri": "dm4.eduzen.lecture.type"
+            "uri": "tub.eduzen.lecture_practice",
+            "type_uri": "tub.eduzen.lecture_type"
         },
         {
             "value": "Free",
-            "uri": "dm4.eduzen.freecourse",
-            "type_uri": "dm4.eduzen.courseidea.type"
+            "uri": "tub.eduzen.course_free",
+            "type_uri": "tub.eduzen.course_type"
         },
         {
             "value": "Obligatory",
-            "uri": "dm4.eduzen.obligatory",
-            "type_uri": "dm4.eduzen.courseidea.type"
+            "uri": "tub.eduzen.course_obligatory",
+            "type_uri": "tub.eduzen.course_type"
         },
         {
             "value": "Elective",
-            "uri": "dm4.eduzen.elective",
-            "type_uri": "dm4.eduzen.courseidea.type"
+            "uri": "tub.eduzen.course_elective",
+            "type_uri": "tub.eduzen.course_type"
         },
         {
             value: "Advancement",
-            uri: "dm4.eduzen.advancing_topic",
+            uri: "tub.eduzen.advancing_topic",
             type_uri: "dm4.core.role_type"
         },
         {
             value: "Basement",
-            uri: "dm4.eduzen.basing_topic",
+            uri: "tub.eduzen.basing_topic",
             type_uri: "dm4.core.role_type"
         }
     ]

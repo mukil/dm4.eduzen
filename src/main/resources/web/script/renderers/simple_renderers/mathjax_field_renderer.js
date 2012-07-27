@@ -1,5 +1,6 @@
-// MathJax.js (TeX) renderer for "dm4.eduzen.task.content" and "dm4.eduzen.suggestion.content"
-dm4c.add_simple_renderer('dm4.eduzen.task.content_field_renderer', {
+//  MathJax.js (TeX) renderer for "tub.eduzen.excercise_description",
+//      "tub.eduzen.excercise_object" and "tub.eduzen.approach.content"
+dm4c.add_simple_renderer('tub.eduzen.mathjax_field_renderer', {
 
     render_info: function(model, $parent) {
         // 
