@@ -29,27 +29,28 @@ dm4c.add_plugin("de.deepamehta.eduzen", function() {
         MathJax.Hub.Configured() // bootstrapes mathjax.js lib
         console.log("EduZEN.configuredMathJax().. for further investigation, check out MathJax-object next line.")
         console.log(MathJax) // is here to learn more about mathjax
+        // fixme: hide "Create Topic Type" menu item
     })
 
-    // calls the alternative REST creation method with customized JSON format
+    /** calls the alternative REST creation method with customized JSON format
     function createContent() {
         var content = prompt('Aufgabeninhalt', 'x*2')
-            topic = dm4c.restc.request('POST', '/eduzen/content/create', { name: "Aufgabe1", content: content })
+            topic = dm4c.restc.request('POST', '/eduzen/resource/create', { name: "Aufgabe1", content: content })
         dm4c.show_topic(new Topic(topic), 'show', null, true)
-    }
+    } **/
 
-    // calls the server side increase method of the selected Example topic
+    /** calls the server side increase method of the selected Example topic
     function increaseExample() {
         var url = '/example/increase/' + dm4c.selected_object.id
             topic = dm4c.restc.request('GET', url)
         dm4c.show_topic(new Topic(topic), 'show', null, true)
-    }
+    } **/
 
-    // register an additional create command
+    /**register an additional create command
     dm4c.add_listener("post_refresh_create_menu", function(type_menu) {
         type_menu.add_separator()
         type_menu.add_item({ label: "Add Content", handler: createContent })
-    })
+    }) **/
 
     function topicLabelCompare(a, b) {
     // compare "a" and "b" in some fashion, and return -1, 0, or 1

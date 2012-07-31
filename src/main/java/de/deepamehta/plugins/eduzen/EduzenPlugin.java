@@ -14,8 +14,8 @@ import de.deepamehta.core.osgi.PluginActivator;
 import de.deepamehta.core.model.TopicModel;
 import de.deepamehta.core.service.ClientState;
 import de.deepamehta.plugins.eduzen.service.EduzenService;
-import de.deepamehta.plugins.eduzen.model.Content;
-import de.deepamehta.plugins.eduzen.model.ContentTopic;
+import de.deepamehta.plugins.eduzen.model.Resource;
+import de.deepamehta.plugins.eduzen.model.ResourceTopic;
 
 @Path("/eduzen")
 @Produces("application/json")
@@ -32,12 +32,12 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
      * REST call with a alternate JSON topic representation.
      */
     @POST
-    @Path("/content/create")
+    @Path("/resource/create")
     @Override
-    public Content createContent(ContentTopic topic, @HeaderParam("Cookie") ClientState clientState) {
-        log.info("create Content " + topic);
+    public Resource createContent(ResourceTopic topic, @HeaderParam("Cookie") ClientState clientState) {
+        log.info("creating \"Resource\" " + topic);
         try {
-            return new Content(topic, dms, clientState);
+            return new Resource(topic, dms, clientState);
         } catch (Exception e) {
             throw new WebApplicationException(new RuntimeException("something went wrong", e));
         }

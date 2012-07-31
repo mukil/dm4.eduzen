@@ -45,6 +45,7 @@
                 {
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
+                        "dm4.webclient.icon": "/de.deepamehta.eduzen/images/Icon_Themenkomplex.png",
                         "dm4.webclient.add_to_create_menu": true,
                         "dm4.webclient.is_searchable_unit": true
                     }
@@ -203,6 +204,11 @@
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
                 {
+                    "part_topic_type_uri":   "tub.eduzen.excercise_name",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                },
+                {
                     "part_topic_type_uri":   "tub.eduzen.excercise_description",
                     "part_cardinality_uri":  "dm4.core.one",
                     "assoc_type_uri":        "dm4.core.composition_def"
@@ -221,7 +227,8 @@
                 {
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
-                        "dm4.webclient.add_to_create_menu": false,
+                        "dm4.webclient.icon": "/de.deepamehta.eduzen/images/Icon_Aufgabe.png",
+                        "dm4.webclient.add_to_create_menu": true,
                         "dm4.webclient.is_searchable_unit": true
                     }
                 }
@@ -274,7 +281,6 @@
                 {
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
-                        "dm4.webclient.icon": "/de.deepamehta.eduzen/images/Icon_Aufgabe.png",
                         "dm4.webclient.add_to_create_menu": true,
                         "dm4.webclient.is_searchable_unit": true
                     }
@@ -440,12 +446,17 @@
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
                 {
-                    "part_topic_type_uri":   "tub.eduzen.practicesheet_due",
+                    "part_topic_type_uri":   "tub.eduzen.practicesheet_name",
                     "part_cardinality_uri":  "dm4.core.one",
                     "assoc_type_uri":        "dm4.core.composition_def"
                 },
                 {
                     "part_topic_type_uri":   "tub.eduzen.practicesheet_given",
+                    "part_cardinality_uri":  "dm4.core.one",
+                    "assoc_type_uri":        "dm4.core.composition_def"
+                },
+                {
+                    "part_topic_type_uri":   "tub.eduzen.practicesheet_due",
                     "part_cardinality_uri":  "dm4.core.one",
                     "assoc_type_uri":        "dm4.core.composition_def"
                 },
@@ -496,7 +507,7 @@
                 {
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
-                        "dm4.webclient.color": "#3d3d3d"
+                        "dm4.webclient.color": "#4a4a4a"
                     }
                 }
             ]
@@ -561,7 +572,7 @@
                 {
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
-                        "dm4.webclient.color": "#ffff4d"
+                        "dm4.webclient.color": "#ffe300"
                     }
                 }
             ]
@@ -614,7 +625,7 @@
                 {
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
-                        "dm4.webclient.color": "#1E90FF"
+                        "dm4.webclient.color": "#7397bc"
                     }
                 }
             ]
