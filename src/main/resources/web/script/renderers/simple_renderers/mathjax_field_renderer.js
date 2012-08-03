@@ -29,7 +29,6 @@ dm4c.add_simple_renderer('tub.eduzen.mathjax_field_renderer', {
         } else {
             var value = model
         }
-        console.log(model)
         var elementInputId = 'math-input-' + model.topic.id;
         var elementOutputId = 'math-output-' + model.topic.id;
         var $content = $('<textarea id="' + elementInputId +

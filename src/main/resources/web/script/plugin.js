@@ -10,7 +10,7 @@ dm4c.add_plugin("de.deepamehta.eduzen", function() {
         // say hello to
         console.log("EduZEN-Plugin.initializing(0.1.0-SNAPSHOT) ... ")
         // ### the workaround to load all important mathjax stuff, except the one file commented above^^
-        MathJax.Ajax.config.root = "http://"+ window.location.host + "/de.deepamehta.eduzen/script/vendor/mathjax"
+        MathJax.Ajax.config.root = "http://stable.eduzen.tu-berlin.de:8080/de.deepamehta.eduzen/script/vendor/mathjax"
         console.log("   > new MathJax.Ajax.config.root => " + MathJax.Ajax.config.root) // ff does not know w.l.origin
         // 
         MathJax.Hub.Config({
