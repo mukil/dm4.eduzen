@@ -150,7 +150,7 @@
             "value": "Excercise Description",
             "uri": "tub.eduzen.excercise_description",
             "data_type_uri": "dm4.core.html",
-            "index_mode_uris": ["dm4.core.fulltext"],
+            "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
             "view_config_topics": [
                 {
                     "type_uri": "dm4.webclient.view_config",
@@ -167,7 +167,7 @@
             "value": "Excercise Object",
             "uri": "tub.eduzen.excercise_object",
             "data_type_uri": "dm4.core.html",
-            "index_mode_uris": ["dm4.core.fulltext"],
+            "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
             "view_config_topics": [
                 {
                     "type_uri": "dm4.webclient.view_config",
@@ -208,7 +208,8 @@
         {
             "value": "Name of Practice sheet",
             "uri": "tub.eduzen.practicesheet_name",
-            "data_type_uri": "dm4.core.text"
+            "data_type_uri": "dm4.core.text",
+            "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"]
         },
         {
             "value": "Given",
@@ -218,7 +219,8 @@
         {
             "value": "Name of Excercise",
             "uri": "tub.eduzen.excercise_name",
-            "data_type_uri": "dm4.core.text"
+            "data_type_uri": "dm4.core.text",
+            "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"]
         },
         {
             "value": "Frozen",
@@ -234,7 +236,7 @@
             "value": "Approach",
             "uri": "tub.eduzen.approach_content",
             "data_type_uri": "dm4.core.html",
-            "index_mode_uris": ["dm4.core.fulltext"],
+            "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
             "view_config_topics": [
                 {
                     "type_uri": "dm4.webclient.view_config",
@@ -261,7 +263,7 @@
             "value": "Explanation",
             "uri": "tub.eduzen.comment_explanation",
             "data_type_uri": "dm4.core.html",
-            "index_mode_uris": ["dm4.core.fulltext"],
+            "index_mode_uris": ["dm4.core.fulltext", "dm4.core.fulltext_key"],
             "view_config_topics": [
                 {
                     "type_uri": "dm4.webclient.view_config",

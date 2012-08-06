@@ -45,6 +45,7 @@ dm4c.add_simple_renderer('tub.eduzen.mathjax_field_renderer', {
             $('#' + elementOutputId).text($('#' + elementInputId).val())
             MathJax.Hub.Queue(["Typeset", MathJax.Hub, elementOutputId])
         })
+        // ### TODO: implement proper return function, with usage of dm4c.REF_PREFIX to reference existing ones
         return function() { // return input value
             return $.trim($content.val())
         }

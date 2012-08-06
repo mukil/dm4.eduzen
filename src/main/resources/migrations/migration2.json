@@ -240,18 +240,31 @@
             "data_type_uri": "dm4.core.composite",
             "assoc_defs": [
                 {
-                    "part_topic_type_uri":   "tub.eduzen.excercise_text",
-                    "part_cardinality_uri":  "dm4.core.one",
-                    "assoc_type_uri":        "dm4.core.composition_def"
+                    "part_topic_type_uri":    "tub.eduzen.excercise_text",
+                    "part_cardinality_uri":   "dm4.core.one",
+                    "whole_cardinality_uri":  "dm4.core.many",
+                    "assoc_type_uri":         "dm4.core.aggregation_def",
+                    "view_config_topics": [
+                        {
+                            "type_uri": "dm4.webclient.view_config",
+                            "composite": {
+                                "dm4.webclient.editable": false
+                            }
+                        }
+                    ]
                 }, {
                     "part_topic_type_uri":    "tub.eduzen.excercise_object",
-                    "part_cardinality_uri":   "dm4.core.many",
+                    "part_cardinality_uri":   "dm4.core.one",
                     "whole_cardinality_uri":  "dm4.core.one",
-                    "assoc_type_uri":         "dm4.core.aggregation_def"
-                }, {
-                    "part_topic_type_uri":   "tub.eduzen.excercise_difficulcy",
-                    "part_cardinality_uri":  "dm4.core.one",
-                    "assoc_type_uri":        "dm4.core.composition_def"
+                    "assoc_type_uri":         "dm4.core.aggregation_def",
+                    "view_config_topics": [
+                        {
+                            "type_uri": "dm4.webclient.view_config",
+                            "composite": {
+                                "dm4.webclient.editable": false
+                            }
+                        }
+                    ]
                 }, {
                     "part_topic_type_uri":   "tub.eduzen.timeframe_note",
                     "part_cardinality_uri":  "dm4.core.one",
