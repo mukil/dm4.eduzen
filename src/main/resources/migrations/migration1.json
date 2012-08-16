@@ -173,6 +173,7 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.simple_renderer_uri": "tub.eduzen.mathjax_field_renderer",
+                        "dm4.webclient.icon": "/de.tu-berlin.eduzen/images/ball-yellow.png",
                         "dm4.webclient.add_to_create_menu": true,
                         "dm4.webclient.is_searchable_unit": false,
                         "dm4.webclient.rows": 4
