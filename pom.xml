@@ -7,7 +7,7 @@
     <name>Eduzen Application Plugin</name>
     <groupId>de.tu-berlin.eduzen</groupId>
     <artifactId>eduzen</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <parent>
@@ -24,6 +24,14 @@
             <version>4.0.12-SNAPSHOT</version>       <!-- newer version of DeepaMehta is available. -->
         </dependency>                                <!-- If your plugin has no Java code at all,   -->
     </dependencies>                                  <!-- the dependencies element is not needed.   -->
+
+    <dependencies>
+        <dependency>
+            <groupId>de.tu-berlin.eduzen</groupId>   
+            <artifactId>mathjax-renderer</artifactId>
+            <version>0.1.0-SNAPSHOT</version>       
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>
