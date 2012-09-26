@@ -46,16 +46,14 @@ public class Migration5 extends Migration {
         dms.getTopic("uri", new SimpleValue("dm4.workspaces.workspace_topic"), false, null).delete(new Directives());
         dms.getTopic("uri", new SimpleValue("dm4.workspaces.workspace_type"), false, null).delete(new Directives());
 
-        // relate username "admin" to at least one workspace (we use "9676", the "EduZEN Editors" default workspace)
-            Topic admin = dms.getTopic("uri", new SimpleValue("dm4.accesscontrol.username"), false, null);
-            if (admin != null) {
-                dms.createAssociation(new AssociationModel("dm4.core.aggregation",
-                    new TopicRoleModel(defaultWorkspace.getId(), "dm4.core.part"),
-                    new TopicRoleModel(admin.getId(), "dm4.core.whole")
-                ), null);
-            } else {
-                throw new RuntimeException("admin not found");
-            }
+        // fetch and relate username "admin" to at least one workspace (we use here "9676" the "EduZEN Editors")
+        Topic admin = dms.getTopic("uri", new SimpleValue("dm4.accesscontrol.username"), false, null);
+        if (admin == null) throw new RuntimeException("could not fetch admin by uri \"dm4.accesscontrol.username\"");
+        //
+        dms.createAssociation(new AssociationModel("dm4.core.aggregation",
+            new TopicRoleModel(defaultWorkspace.getId(), "dm4.core.part"),
+            new TopicRoleModel(admin.getId(), "dm4.core.whole")
+        ), null);
     }
 
 }
