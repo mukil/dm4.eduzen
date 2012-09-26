@@ -47,7 +47,7 @@ public class Migration5 extends Migration {
         dms.getTopic("uri", new SimpleValue("dm4.workspaces.workspace_type"), false, null).delete(new Directives());
 
         // fetch and relate username "admin" to at least one workspace (we use here "9676" the "EduZEN Editors")
-        Topic admin = dms.getTopic("uri", new SimpleValue("dm4.accesscontrol.username"), false, null);
+        Topic admin = dms.getTopic("dm4.accesscontrol.username", new SimpleValue("admin"), false, null);
         if (admin == null) throw new RuntimeException("could not fetch admin by uri \"dm4.accesscontrol.username\"");
         //
         dms.createAssociation(new AssociationModel("dm4.core.aggregation",
