@@ -20,13 +20,15 @@ public class Migration5 extends Migration {
 
     private Logger logger = Logger.getLogger(getClass().getName());
 
+    private long WORKSPACE_ID = 9676;
+
     // -------------------------------------------------------------------------------------------------- Public Methods
 
     @Override
     public void run() {
 
         // rename default Workspace
-        Topic defaultWorkspace = dms.getTopic(9676, false, null);
+        Topic defaultWorkspace = dms.getTopic(WORKSPACE_ID, false, null);
         // setChildTopicvalue just works if there is a "one" relation present
         defaultWorkspace.setChildTopicValue("dm4.workspaces.name", new SimpleValue("EduZEN Editors"));
         // defaultWorkspace.setUri("de.workspaces.deepamehta");
