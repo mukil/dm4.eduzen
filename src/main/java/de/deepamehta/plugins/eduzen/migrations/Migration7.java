@@ -137,21 +137,22 @@ public class Migration7 extends Migration {
         assignWorkspace(compatible);
         AssociationType identical = dms.getAssociationType("tub.eduzen.identical", null);
         assignWorkspace(identical);
-        // maybe we need to add, some dm4.types to the EduZEN Editors-Workspace too? 
-        // this was just tested with "Web Resource", admin can create and edit instances of such, postponing issue.
 
         // fixme: cannot create new AssocDefModel via this call with a new ViewConfig (editable=false)
         // fixme: cannot be edited, does this new assoc also needs to be associated with a workspace, if so, how?
         identity.addAssocDef(new AssociationDefinitionModel("dm4.core.aggregation_def",
             "tub.eduzen.identity", "dm4.accesscontrol.username", "dm4.core.one", "dm4.core.one"));
+        // equip tub.eduzen.identity with an e-mail-address from dm4.contacts
+        identity.addAssocDef(new AssociationDefinitionModel("dm4.core.aggregation_def",
+            "tub.eduzen.identity", "dm4.contacts.email_address", "dm4.core.one", "dm4.core.one"));
 
         // create LV AssocType manually
         dms.createAssociationType(new AssociationTypeModel("tub.eduzen.lecture_content", 
           "Lecture Content", "dm4.core.text"), null);
-        // assign new assoctype to workspace
+        // and assign it to our workspace
         AssociationType lectureContent = dms.getAssociationType("tub.eduzen.lecture_content", null);
         assignWorkspace(lectureContent);
-        lectureContent.getViewConfig().addSetting("dm4.webclient.view_config", "dm4.webclient.color", "#1072c8");
+        lectureContent.getViewConfig().addSetting("dm4.webclient.view_config", "dm4.webclient.color", "#1072c8");        
     }
 
 
