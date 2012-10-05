@@ -8,11 +8,12 @@ Project Website: <http://web.eduzen.tu-berlin.de>
 
 # Changelog
 
-0.2.0-SNAPSHOT, Sep 25, 2012:
+0.2.0-SNAPSHOT, Oct 05, 2012:
 
 - moved mathjax integration to it`s own plugin <https://github.com/mukil/dm4-mathjax-renderer>
-- meanwhile we made a couple of changes in the model
-- to be upgraded to run with DeepaMehta 4.0.12
+- adapted the model towards the "approaching/excercises/and/comments"-launch
+- runs with DeepaMehta 4.0.13-SNAPSHOT
+- and updated this readme cause of a slightly to fast git commit command (see last commit)
 
 0.1.0-SNAPSHOT, Jul 20, 2012:
 
