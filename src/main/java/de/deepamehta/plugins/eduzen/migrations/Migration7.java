@@ -29,15 +29,15 @@ public class Migration7 extends Migration {
     @Override
     public void run() {
 
-        // set URI for default Workspace
+        // 1) set URI for default Workspace
         Topic defaultWorkspace = dms.getTopic(WORKSPACE_ID, false, null);
         defaultWorkspace.setUri("tub.eduzen.workspace_editors");
 
-        // create new "EduZEN"-Workspace for users
+        // 2) create new "EduZEN"-Workspace for users
         dms.createTopic(new TopicModel("tub.eduzen.workspace_users", "dm4.workspaces.workspace", 
             new CompositeValue().put("dm4.workspaces.name", "EduZEN Users")), null);
 
-        // assign all eduzen topic types to "EduZEN Editors"-Workspace
+        // 3) assign all existing eduzen topic types to "EduZEN Editors"-Workspace
         TopicType studyPathName = dms.getTopicType("tub.eduzen.studypath_name", null);
         assignWorkspace(studyPathName);
         TopicType moduleName = dms.getTopicType("tub.eduzen.module_name", null);
@@ -138,21 +138,36 @@ public class Migration7 extends Migration {
         AssociationType identical = dms.getAssociationType("tub.eduzen.identical", null);
         assignWorkspace(identical);
 
+        // 4) Enrich TUB Identity Topic about username and mailbox fields
         // fixme: cannot create new AssocDefModel via this call with a new ViewConfig (editable=false)
         // fixme: cannot be edited, does this new assoc also needs to be associated with a workspace, if so, how?
         identity.addAssocDef(new AssociationDefinitionModel("dm4.core.aggregation_def",
             "tub.eduzen.identity", "dm4.accesscontrol.username", "dm4.core.one", "dm4.core.one"));
-        // equip tub.eduzen.identity with an e-mail-address from dm4.contacts
         identity.addAssocDef(new AssociationDefinitionModel("dm4.core.aggregation_def",
             "tub.eduzen.identity", "dm4.contacts.email_address", "dm4.core.one", "dm4.core.one"));
 
-        // create LV AssocType manually
-        dms.createAssociationType(new AssociationTypeModel("tub.eduzen.lecture_content", 
-          "Lecture Content", "dm4.core.text"), null);
-        // and assign it to our workspace
-        AssociationType lectureContent = dms.getAssociationType("tub.eduzen.lecture_content", null);
-        assignWorkspace(lectureContent);
-        lectureContent.getViewConfig().addSetting("dm4.webclient.view_config", "dm4.webclient.color", "#1072c8");        
+        // 5) create new LV-Topicalarea AssocType
+        AssociationType lectureContentTopicalarea = dms.createAssociationType(
+          new AssociationTypeModel("tub.eduzen.lecture_content_topicalarea", 
+            "Lecture Content (Topicalarea)", "dm4.core.composite"), null);
+        // enrich assoc-type with a many relation to excercise-text
+        lectureContentTopicalarea.addAssocDef(new AssociationDefinitionModel("dm4.core.aggregation_def",
+            "tub.eduzen.lecture_content_topicalarea", "tub.eduzen.excercise_text", "dm4.core.one", "dm4.core.many"));
+        // update view-config of assoctype
+        lectureContentTopicalarea.getViewConfig()
+          .addSetting("dm4.webclient.view_config", "dm4.webclient.color", "#1072c8");        
+        // assign to workspace_editors
+        assignWorkspace(lectureContentTopicalarea);
+
+        // 6) create LV-Excercise Assoctype
+        AssociationType lectureContentExcercise = dms.createAssociationType(
+          new AssociationTypeModel("tub.eduzen.lecture_content_excercise", 
+            "Lecture Content (Excercise)", "dm4.core.text"), null);
+        // update view-config of assoctype
+        lectureContentExcercise.getViewConfig()
+          .addSetting("dm4.webclient.view_config", "dm4.webclient.color", "#1072c8");        
+        // assign to workspace_editors
+        assignWorkspace(lectureContentExcercise);
     }
 
 

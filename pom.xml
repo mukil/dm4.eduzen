@@ -21,13 +21,18 @@
         <dependency>                                 <!-- depend on the DeepaMehta core module.     -->
             <groupId>de.deepamehta</groupId>         <!-- Copy this declaration as is.              -->
             <artifactId>deepamehta-core</artifactId> <!-- Just update the version number, if a      -->
-            <version>4.0.12</version>       <!-- newer version of DeepaMehta is available. -->
+            <version>4.0.13-SNAPSHOT</version>       <!-- newer version of DeepaMehta is available. -->
         </dependency>                                <!-- If your plugin has no Java code at all,   -->
         <!--dependency>
             <groupId>de.tu-berlin.eduzen</groupId>   
             <artifactId>mathjax-renderer</artifactId>
             <version>0.1.0-SNAPSHOT</version>       
         </dependency-->
+	<dependency>
+		<groupId>de.deepamehta</groupId>
+		<artifactId>deepamehta-accesscontrol</artifactId>
+		<version>4.0.13-SNAPSHOT</version>
+	</dependency>
     </dependencies>
 
     <build>
