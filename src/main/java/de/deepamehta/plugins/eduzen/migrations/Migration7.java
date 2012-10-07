@@ -149,7 +149,7 @@ public class Migration7 extends Migration {
         // 5) create new LV-Topicalarea AssocType
         AssociationType lectureContentTopicalarea = dms.createAssociationType(
           new AssociationTypeModel("tub.eduzen.lecture_content_topicalarea", 
-            "Lecture Content (Topicalarea)", "dm4.core.composite"), null);
+            "Lecture Content (Topical Area)", "dm4.core.composite"), null);
         // enrich assoc-type with a many relation to excercise-text
         lectureContentTopicalarea.addAssocDef(new AssociationDefinitionModel("dm4.core.aggregation_def",
             "tub.eduzen.lecture_content_topicalarea", "tub.eduzen.excercise_text", "dm4.core.one", "dm4.core.many"));
