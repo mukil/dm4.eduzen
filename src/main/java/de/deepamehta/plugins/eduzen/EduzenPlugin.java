@@ -61,9 +61,10 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     }
 
     /**
-    * Creates a new <code>Content</code> instance based on the domain specific
-    * REST call with a alternate JSON topic representation.
-    */
+     * Creates a new <code>Content</code> instance based on the domain specific
+     * REST call with a alternate JSON topic representation.
+     */
+
     @POST
     @Path("/resource/create")
     @Override
@@ -77,14 +78,14 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     }
 
     /**
-    * Experimental Server Method that shall do the trick for now.
-    */
+     * Experimental Server Method that shall do the trick for now.
+     */
 
     @GET
     @Path("/comments/all")
     @Override
     public ResultSet<Topic> getAllUncommentedApproaches(@HeaderParam("Cookie") ClientState clientState) {
-        // DeepaMehtaTransaction tx = dms.beginTx();
+
         Topic user = acl.getUsername();
         log.info("Retrieving all approaches by users in \"tub.eduzen.workspace_users\" for " + acl.getUsername());
         Topic editorsWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_editors"), true, null);
@@ -100,7 +101,7 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
         Iterator<Topic> results = topics.iterator();
         while ( results.hasNext() ) {
             Topic t = results.next();
-            Topic author = t.getRelatedTopic("tub.eduzen.author", "dm4.core.default", 
+            Topic author = t.getRelatedTopic("tub.eduzen.submitter", "dm4.core.default", 
               "dm4.core.default", "tub.eduzen.identity", false, false, null);
             Topic approached = t.getRelatedTopic("dm4.core.composition", "dm4.core.whole", 
               "dm4.core.part", "tub.eduzen.approach", false, true, null);
@@ -124,25 +125,97 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     }
 
     /**
-    * Experimental Server Method that shall do the trick for now.
-    * Input: Excercise, Output: State of Excercise (Accomplished, In Progress)
-    */
+     * Experimental Server Method that shall find an exercise-object for our use and an exercise-text.
+     * Input: Excercise Text (Quest), Output: Unseen/new Excercise-Object for current user 
+     */
 
     @GET
-    @Path("/state/excercise/{excerciseId}")
+    @Path("/exercise-object/{exerciseTextId}")
     @Override
-    public String getExcerciseState(@PathParam("excerciseId") long excerciseId, 
+    public ResultSet<RelatedTopic> getExerciseObjects(@PathParam("exerciseTextId") long exerciseTextId, 
+                                    @HeaderParam("Cookie") ClientState clientState) {
+        Topic user = acl.getUsername();
+        Topic tub = getTUBIdentity(user);
+        log.info("Finding an exercise-object for exercise-text ("+ exerciseTextId +") + user " + acl.getUsername());
+        if (user == null) throw new WebApplicationException(401);
+
+        Set<RelatedTopic> remainingObjects = new LinkedHashSet<RelatedTopic>();
+        ResultSet<RelatedTopic> takenExercises = tub.getRelatedTopics("tub.eduzen.submitter", 
+            "dm4.core.default", "dm4.core.default", "tub.eduzen.excercise", false, true, 0, null);
+
+        Topic exerciseText = dms.getTopic(exerciseTextId, true, null);
+        ResultSet<RelatedTopic> compatibleObjects = exerciseText.getRelatedTopics("tub.eduzen.compatible", 
+            "dm4.core.default", "dm4.core.default", "tub.eduzen.excercise_object", false, false, 0, null);
+
+        if (takenExercises.getSize() == 0) {
+            // return all compatible exercise-objects
+            log.info("  returning all compatbile exercise-objects for this excercise-text");
+            return compatibleObjects;
+        }
+        Set<RelatedTopic> exercisesForThisQuest = new LinkedHashSet<RelatedTopic>();
+        Iterator<RelatedTopic> exercises = takenExercises.iterator();        
+        //  we now have at hand all excercises taken by our user, strip down to the ones taken for this excercise-text
+        while (exercises.hasNext()) {
+            RelatedTopic takenExercise = exercises.next();
+            Topic e = dms.getTopic(takenExercise.getId(), true, null);
+            TopicModel onceTakenQuest = e.getCompositeValue().getTopic("tub.eduzen.excercise_text");
+            if (onceTakenQuest.getId() == exerciseText.getId()) {
+                exercisesForThisQuest.add(takenExercise);
+            }
+        }
+
+        if (exercisesForThisQuest.size() == 0) {
+            // return all compatible exercise-objects, too. user never worked on this quest
+            log.info("  user has never worked on this quest " + exerciseText.getSimpleValue() + " yet");
+            log.info("  returning all compatbile exercise-objects for this excercise-text");
+            return compatibleObjects;
+        }
+        // 
+        Iterator<RelatedTopic> compatibles = compatibleObjects.iterator();
+        log.info("  found " + compatibleObjects.getSize() + " compatible excercise-objects overall");
+        while (compatibles.hasNext()) {
+            RelatedTopic compatibleObject = compatibles.next();
+            Iterator<RelatedTopic> taken = exercisesForThisQuest.iterator();
+            boolean takeIt = true;
+            while (taken.hasNext()) {
+                RelatedTopic exercise = taken.next();
+                Topic o = dms.getTopic(exercise.getId(), true, null);
+                TopicModel onceTakenObject = o.getCompositeValue().getTopic("tub.eduzen.excercise_object");
+                // dont take the ones already taken
+                if (onceTakenObject.getId() == compatibleObject.getId()) {
+                    log.info("    strippin: "+ user.getSimpleValue() +" already worked with exercise-object "
+                      + compatibleObject.getId() +" and excercise-text " + exerciseText.getId());
+                    takeIt = false;
+                }
+            }
+            if (takeIt) remainingObjects.add(compatibleObject);
+        }
+        log.info("  returning "+ remainingObjects.size() +"  exercise-objects for user and this excercise-text");
+        return new ResultSet<RelatedTopic>(remainingObjects.size(), remainingObjects);
+    }
+
+
+    /**
+     * Experimental Server Method that shall do the trick for now.
+     * Input: Excercise, Output: State of Excercise (Accomplished, In Progress)
+     */
+
+    @GET
+    @Path("/state/exercise/{exerciseId}")
+    @Override
+    public String getExerciseState(@PathParam("exerciseId") long exerciseId, 
                                     @HeaderParam("Cookie") ClientState clientState) {
         Topic user = acl.getUsername();
         String status = "{\"excercise_state\": \"" + UNDECIDED + "\", \"quest_state\": \"" + UNSOLVED + "\"}";
-        log.info("Retrieving state of excercise ("+ excerciseId +") for user " + acl.getUsername());
+        log.info("Retrieving state of exercise ("+ exerciseId +") for user " + acl.getUsername());
         if (user == null) throw new WebApplicationException(401);
-        Topic excercise = dms.getTopic(excerciseId, true, null);
-        List<TopicModel> approaches = excercise.getCompositeValue().getTopics("tub.eduzen.approach");
+        Topic exercise = dms.getTopic(exerciseId, true, null);
+        List<TopicModel> approaches = exercise.getCompositeValue().getTopics("tub.eduzen.approach");
         int bunchOfTrues = 0;
         int bunchOfFalses = 0;
+        // 
         Iterator<TopicModel> results = approaches.iterator();
-        log.info("checking excercise-state for " + approaches.size() + " approaches");
+        log.info("checking exercise-state for " + approaches.size() + " approaches");
         while (results.hasNext()) {
             TopicModel approachModel = results.next();
             Topic comment = dms.getTopic(approachModel.getId(), true, null); // complicated?
@@ -215,6 +288,11 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
         log.info("approach "+ approach.getId() +" was commented as being \""+ status +"\" ("
           + bunchOfTrues +" times TRUE, " + bunchOfFalses +" times FALSE");
         return status;
+    }
+
+    private Topic getTUBIdentity(Topic user) {
+        return user.getRelatedTopic("dm4.core.aggregation", "dm4.core.part", "dm4.core.whole", "tub.eduzen.identity", 
+            false, true, null);
     }
 
     /** --- Input: Excercise Text, Output: State of Excercise Text (Accomplished, In Progress) --- */

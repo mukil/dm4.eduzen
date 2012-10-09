@@ -12,6 +12,7 @@ import de.deepamehta.core.model.CompositeValue;
 import de.deepamehta.core.model.AssociationDefinitionModel;
 import de.deepamehta.core.model.AssociationTypeModel;
 import de.deepamehta.core.model.AssociationModel;
+import de.deepamehta.core.model.TopicTypeModel;
 import de.deepamehta.core.model.TopicRoleModel;
 import de.deepamehta.core.model.TopicModel;
 import de.deepamehta.core.service.Migration;
@@ -147,27 +148,26 @@ public class Migration7 extends Migration {
             "tub.eduzen.identity", "dm4.contacts.email_address", "dm4.core.one", "dm4.core.one"));
 
         // 5) create new LV-Topicalarea AssocType
-        AssociationType lectureContentTopicalarea = dms.createAssociationType(
-          new AssociationTypeModel("tub.eduzen.lecture_content_topicalarea", 
-            "Lecture Content (Topical Area)", "dm4.core.composite"), null);
-        // enrich assoc-type with a many relation to excercise-text
-        lectureContentTopicalarea.addAssocDef(new AssociationDefinitionModel("dm4.core.aggregation_def",
-            "tub.eduzen.lecture_content_topicalarea", "tub.eduzen.excercise_text", "dm4.core.one", "dm4.core.many"));
+        AssociationType lectureContent = dms.createAssociationType(
+          new AssociationTypeModel("tub.eduzen.lecture_content", "Lecture Content", "dm4.core.composite"), null);
+        // create Topic Type "Ordinal Number" (Datatype: "Number")
+        TopicType ordinalNumber = dms.createTopicType(new TopicTypeModel("tub.eduzen.ordinal_number", 
+            "Ordinal Number", "dm4.core.number"), null);
+        // build assoc-type composed of a one relation to "tub.eduzen.ordinal_number", needed as assocs-default-label
+        AssociationDefinitionModel assocDefModel1 = new AssociationDefinitionModel("dm4.core.composition_def",
+            "tub.eduzen.lecture_content", "tub.eduzen.ordinal_number", "dm4.core.one", "dm4.core.one");
+        lectureContent.addAssocDef(assocDefModel1);
+        // make assoc-type aggregate a many relation via "tub.eduzen.lecture_content_excercise" to .excercise-texts
+        AssociationDefinitionModel assocDefModel2 = new AssociationDefinitionModel("dm4.core.aggregation_def",
+            "tub.eduzen.lecture_content", "tub.eduzen.excercise_text", "dm4.core.one", "dm4.core.many");
+        // set multi_renderer on assoc-type-def to enable managing aggregated excercise-texts in association editor
+        assocDefModel2.getViewConfigModel().addSetting("dm4.webclient.view_config", 
+            "dm4.webclient.multi_renderer_uri", "dm4.webclient.checkbox_renderer");
+        lectureContent.addAssocDef(assocDefModel2);
         // update view-config of assoctype
-        lectureContentTopicalarea.getViewConfig()
-          .addSetting("dm4.webclient.view_config", "dm4.webclient.color", "#1072c8");        
+        lectureContent.getViewConfig().addSetting("dm4.webclient.view_config", "dm4.webclient.color", "#1072c8");        
         // assign to workspace_editors
-        assignWorkspace(lectureContentTopicalarea);
-
-        // 6) create LV-Excercise Assoctype
-        AssociationType lectureContentExcercise = dms.createAssociationType(
-          new AssociationTypeModel("tub.eduzen.lecture_content_excercise", 
-            "Lecture Content (Excercise)", "dm4.core.text"), null);
-        // update view-config of assoctype
-        lectureContentExcercise.getViewConfig()
-          .addSetting("dm4.webclient.view_config", "dm4.webclient.color", "#1072c8");        
-        // assign to workspace_editors
-        assignWorkspace(lectureContentExcercise);
+        assignWorkspace(lectureContent);
     }
 
 

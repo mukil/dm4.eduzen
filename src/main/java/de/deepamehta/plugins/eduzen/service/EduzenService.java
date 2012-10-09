@@ -1,6 +1,7 @@
 package de.deepamehta.plugins.eduzen.service;
 
 import de.deepamehta.core.Topic;
+import de.deepamehta.core.RelatedTopic;
 import de.deepamehta.core.ResultSet;
 import de.deepamehta.core.model.TopicModel;
 import de.deepamehta.core.service.ClientState;
@@ -16,6 +17,8 @@ public interface EduzenService extends PluginService {
 
   ResultSet<Topic> getAllUncommentedApproaches(ClientState clientState);
 
-  String getExcerciseState(long excerciseId, ClientState clientState);
+  String getExerciseState(long exerciseId, ClientState clientState);
+
+  ResultSet<RelatedTopic> getExerciseObjects(long exerciseTextId, ClientState clientState);
 
 }
