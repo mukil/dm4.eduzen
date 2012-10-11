@@ -17,7 +17,11 @@ public interface EduzenService extends PluginService {
 
   ResultSet<Topic> getAllUncommentedApproaches(ClientState clientState);
 
+  String getApproachState(long approachId, ClientState clientState);
+  
   String getExerciseState(long exerciseId, ClientState clientState);
+
+  String getExerciseTextState(long exerciseTextId, ClientState clientState);
 
   ResultSet<RelatedTopic> getExerciseObjects(long exerciseTextId, ClientState clientState);
 
