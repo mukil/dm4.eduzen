@@ -15,7 +15,13 @@ public interface EduzenService extends PluginService {
   
   // Queries for correctors ...
 
-  ResultSet<Topic> getAllUncommentedApproaches(ClientState clientState);
+  ResultSet<Topic> getAllExercises(ClientState clientState);
+
+  ResultSet<Topic> getAllNewExercises(ClientState clientState);
+  
+  ResultSet<Topic> getAllUncommentedExercises(ClientState clientState);
+  
+  ResultSet<Topic> getAllUnapproachedExercises(ClientState clientState);
 
   String getApproachState(long approachId, ClientState clientState);
   
