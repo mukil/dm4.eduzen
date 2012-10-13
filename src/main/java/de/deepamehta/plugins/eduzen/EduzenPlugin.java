@@ -252,7 +252,7 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
                                     @HeaderParam("Cookie") ClientState clientState) {
         Topic user = acl.getUsername();
         Topic tub = getTUBIdentity(user);
-        log.info("Finding an exercise-object for exercise-text ("+ exerciseTextId +") + user " + acl.getUsername());
+        log.info("Finding an exercise-object for exercise-text ("+ exerciseTextId +") + user " + user.getSimpleValue());
         if (user == null) throw new WebApplicationException(401);
 
         Set<RelatedTopic> remainingObjects = new LinkedHashSet<RelatedTopic>();
@@ -263,11 +263,6 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
         ResultSet<RelatedTopic> compatibleObjects = exerciseText.getRelatedTopics("tub.eduzen.compatible", 
             "dm4.core.default", "dm4.core.default", "tub.eduzen.excercise_object", false, false, 0, null);
 
-        if (takenExercises.getSize() == 0) {
-            // return all compatible exercise-objects
-            log.info("  returning all compatbile exercise-objects for this excercise-text");
-            return compatibleObjects;
-        }
         Set<RelatedTopic> exercisesForThisQuest = new LinkedHashSet<RelatedTopic>();
         Iterator<RelatedTopic> exercises = takenExercises.iterator();        
         //  we now have at hand all excercises taken by our user, strip down to the ones taken for this excercise-text
@@ -306,7 +301,7 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
             }
             if (takeIt) remainingObjects.add(compatibleObject);
         }
-        log.info("  returning "+ remainingObjects.size() +"  exercise-objects for user and this excercise-text");
+        log.info("  returning "+ remainingObjects.size() +"  exercise-objects");
         return new ResultSet<RelatedTopic>(remainingObjects.size(), remainingObjects);
     }
 
