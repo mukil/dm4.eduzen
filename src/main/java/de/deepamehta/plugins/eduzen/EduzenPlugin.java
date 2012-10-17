@@ -86,12 +86,11 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     @Override
     public ResultSet<Topic> getAllNewExercises(@HeaderParam("Cookie") ClientState clientState) {
 
-        Topic user = acl.getUsername();
+        Topic user = null;
+	      String username = acl.getUsername();
+	      if (username != null) user = acl.getUsername(username);
         Topic editorsWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_editors"), true, null);
         Topic membersWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_users"), true, null);
-        if (user == null) {
-            throw new WebApplicationException(401);
-        }
         if (!ws.isAssignedToWorkspace(user, editorsWs.getId())) {
             throw new WebApplicationException(401);
         }
@@ -131,12 +130,11 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     @Override
     public ResultSet<Topic> getAllUncommentedExercises(@HeaderParam("Cookie") ClientState clientState) {
 
-        Topic user = acl.getUsername();
+        Topic user = null;
+	      String username = acl.getUsername();
+	      if (username != null) user = acl.getUsername(username);
         Topic editorsWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_editors"), true, null);
         Topic membersWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_users"), true, null);
-        if (user == null) {
-            throw new WebApplicationException(401);
-        }
         if (!ws.isAssignedToWorkspace(user, editorsWs.getId())) {
             throw new WebApplicationException(401);
         }
@@ -175,12 +173,11 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     @Override
     public ResultSet<Topic> getAllUnapproachedExercises(@HeaderParam("Cookie") ClientState clientState) {
 
-        Topic user = acl.getUsername();
+        Topic user = null;
+	      String username = acl.getUsername();
+	      if (username != null) user = acl.getUsername(username);
         Topic editorsWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_editors"), true, null);
         Topic membersWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_users"), true, null);
-        if (user == null) {
-            throw new WebApplicationException(401);
-        }
         if (!ws.isAssignedToWorkspace(user, editorsWs.getId())) {
             throw new WebApplicationException(401);
         }
@@ -211,12 +208,11 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     @Override
     public ResultSet<Topic> getAllExercises(@HeaderParam("Cookie") ClientState clientState) {
 
-        Topic user = acl.getUsername();
+        Topic user = null;
+	      String username = acl.getUsername();
+	      if (username != null) user = acl.getUsername(username);
         Topic editorsWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_editors"), true, null);
         Topic membersWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_users"), true, null);
-        if (user == null) {
-            throw new WebApplicationException(401);
-        }
         if (!ws.isAssignedToWorkspace(user, editorsWs.getId())) {
             throw new WebApplicationException(401);
         }
@@ -250,11 +246,11 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     @Override
     public ResultSet<RelatedTopic> getExerciseObjects(@PathParam("exerciseTextId") long exerciseTextId, 
                                     @HeaderParam("Cookie") ClientState clientState) {
-        Topic user = acl.getUsername();
+        Topic user = null;
+	      String username = acl.getUsername();
+	      if (username != null) user = acl.getUsername(username);
         Topic tub = getTUBIdentity(user);
         log.info("Finding an exercise-object for exercise-text ("+ exerciseTextId +") + user " + user.getSimpleValue());
-        if (user == null) throw new WebApplicationException(401);
-
         Set<RelatedTopic> remainingObjects = new LinkedHashSet<RelatedTopic>();
         ResultSet<RelatedTopic> takenExercises = tub.getRelatedTopics("tub.eduzen.submitter", 
             "dm4.core.default", "dm4.core.default", "tub.eduzen.excercise", false, false, 0, null);
@@ -313,7 +309,9 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     @Override
     public String getExerciseState(@PathParam("exerciseId") long exerciseId, 
                                     @HeaderParam("Cookie") ClientState clientState) {
-        Topic user = acl.getUsername();
+        Topic user = null;
+	      String username = acl.getUsername();
+	      if (username != null) user = acl.getUsername(username);
         String status = "{\"excercise_state\": \"" + UNDECIDED + "\", \"quest_state\": \"" + UNSOLVED + "\"}";
         if (user == null) throw new WebApplicationException(401);
         Topic exercise = dms.getTopic(exerciseId, true, null);
@@ -348,7 +346,7 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
                     }
                     // a successful comment count for determining excercise-state
                 } catch (ClassCastException ex) {
-                    log.warning("some comment on approach: "+ approach.getId() +" has not set their correctnes as boolean.."
+                    log.warning(" a comment on approach: "+ approach.getId() +" has not set the correct-flag  boolean.."
                         + ex.toString());
                 }
             }
@@ -370,7 +368,9 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     @Override
     public String getExerciseTextState(@PathParam("exerciseTextId") long exerciseTextId, 
                                     @HeaderParam("Cookie") ClientState clientState) {
-        Topic user = acl.getUsername();
+        Topic user = null;
+	      String username = acl.getUsername();
+	      if (username != null) user = acl.getUsername(username);
         Topic tub = getTUBIdentity(user);
         String status = UNSOLVED;
         if (user == null || tub == null) throw new WebApplicationException(401);
@@ -414,7 +414,9 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     @Override
     public String getApproachState(@PathParam("approachId") long approachId, 
                                     @HeaderParam("Cookie") ClientState clientState) {
-        Topic user = acl.getUsername();
+        Topic user = null;
+	      String username = acl.getUsername();
+	      if (username != null) user = acl.getUsername(username);
         Topic tub = getTUBIdentity(user);
         String status = UNSOLVED;
         if (user == null || tub == null) throw new WebApplicationException(401);
@@ -488,6 +490,7 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     }
 
     private Topic getTUBIdentity(Topic user) {
+        if (user == null) throw new WebApplicationException(401);
         return user.getRelatedTopic("dm4.core.aggregation", "dm4.core.part", "dm4.core.whole", "tub.eduzen.identity", 
             false, true, null);
     }
