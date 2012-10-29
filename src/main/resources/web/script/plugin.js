@@ -1,7 +1,19 @@
 dm4c.add_plugin("de.tu-berlin.eduzen", function() {
 
     // define type specific commands and register them
-    dm4c.add_listener('init', function (e) {})
+    dm4c.add_listener("init", function (e) {})
+
+    dm4c.add_listener("option_topics", function(object, topic_type_uri, assoc_def) {
+
+        if (object.type_uri == "tub.eduzen.lecture_content") {
+            // in case the ends of this assoc are distinguishable by get the right one by type
+            var filterBy = object.get_topic_by_type("tub.eduzen.topicalarea")
+            var related = dm4c.restc.get_topic_related_topics(filterBy.id, {
+                "others_topic_type_uri": "tub.eduzen.excercise_text"
+            }, true) // sort=true
+            return related.items
+        }
+    })
 
     /** calls the alternative REST creation method with customized JSON format
     function createContent() {

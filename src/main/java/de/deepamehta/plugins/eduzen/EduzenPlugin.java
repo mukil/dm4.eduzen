@@ -415,11 +415,11 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     public String getApproachState(@PathParam("approachId") long approachId, 
                                     @HeaderParam("Cookie") ClientState clientState) {
         Topic user = null;
-	      String username = acl.getUsername();
-	      if (username != null) user = acl.getUsername(username);
+        String username = acl.getUsername();
+        if (username != null) user = acl.getUsername(username);
         Topic tub = getTUBIdentity(user);
         String status = UNSOLVED;
-        if (user == null || tub == null) throw new WebApplicationException(401);
+        if (tub == null) throw new WebApplicationException(401);
         return "{\"status\":\"" + checkStateOfApproach(dms.getTopic(approachId, true, null)) + "\"}";
     }
 
