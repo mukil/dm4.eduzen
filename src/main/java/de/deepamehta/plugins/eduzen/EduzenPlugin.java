@@ -3,7 +3,6 @@ package de.deepamehta.plugins.eduzen;
 import java.util.logging.Logger;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -18,17 +17,13 @@ import javax.ws.rs.WebApplicationException;
 
 import de.deepamehta.core.Topic;
 import de.deepamehta.core.ResultSet;
-import de.deepamehta.core.DeepaMehtaTransaction;
 import de.deepamehta.core.osgi.PluginActivator;
 import de.deepamehta.core.model.TopicModel;
 import de.deepamehta.core.model.SimpleValue;
-import de.deepamehta.core.model.CompositeValue;
 import de.deepamehta.core.RelatedTopic;
 import de.deepamehta.core.service.ClientState;
 import de.deepamehta.core.service.PluginService;
-import de.deepamehta.core.service.event.PluginServiceArrivedListener;
-import de.deepamehta.core.service.event.PluginServiceGoneListener;
-import de.deepamehta.plugins.accesscontrol.AccessControlPlugin;
+import de.deepamehta.core.service.annotation.ConsumesService;
 import de.deepamehta.plugins.eduzen.service.EduzenService;
 import de.deepamehta.plugins.eduzen.model.Resource;
 import de.deepamehta.plugins.eduzen.model.ResourceTopic;
@@ -40,8 +35,7 @@ import de.deepamehta.plugins.workspaces.service.WorkspacesService;
 @Path("/eduzen")
 @Consumes("application/json")
 @Produces("application/json")
-public class EduzenPlugin extends PluginActivator implements EduzenService, PluginServiceArrivedListener, 
-                                                                                PluginServiceGoneListener {
+public class EduzenPlugin extends PluginActivator implements EduzenService {
 
     private Logger log = Logger.getLogger(getClass().getName());
     private AccessControlService acl;
@@ -94,9 +88,9 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
         if (!ws.isAssignedToWorkspace(user, editorsWs.getId())) {
             throw new WebApplicationException(401);
         }
-        ResultSet<Topic> topics = dms.getTopics("tub.eduzen.excercise", false, 0, null); // no limit, slim fetch all
+        ResultSet<RelatedTopic> topics = dms.getTopics("tub.eduzen.excercise", false, 0, null); // no limit, slim fetch all
         Set<Topic> resultset = new LinkedHashSet<Topic>();
-        Iterator<Topic> results = topics.iterator();
+        Iterator<RelatedTopic> results = topics.iterator();
         while ( results.hasNext() ) {
             Topic exercise = results.next();
             // get author to circumvent "double excercise-objects"-bug
@@ -138,9 +132,9 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
         if (!ws.isAssignedToWorkspace(user, editorsWs.getId())) {
             throw new WebApplicationException(401);
         }
-        ResultSet<Topic> topics = dms.getTopics("tub.eduzen.excercise", false, 0, null); // no limit, slim fetch all
+        ResultSet<RelatedTopic> topics = dms.getTopics("tub.eduzen.excercise", false, 0, null); // no limit, slim fetch all
         Set<Topic> resultset = new LinkedHashSet<Topic>();
-        Iterator<Topic> results = topics.iterator();
+        Iterator<RelatedTopic> results = topics.iterator();
         while ( results.hasNext() ) {
             Topic exercise = results.next();
             // get author to circumvent "double excercise-objects"-bug
@@ -181,9 +175,9 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
         if (!ws.isAssignedToWorkspace(user, editorsWs.getId())) {
             throw new WebApplicationException(401);
         }
-        ResultSet<Topic> topics = dms.getTopics("tub.eduzen.excercise", false, 0, null); // no limit, slim fetch all
+        ResultSet<RelatedTopic> topics = dms.getTopics("tub.eduzen.excercise", false, 0, null); // no limit, slim fetch all
         Set<Topic> resultset = new LinkedHashSet<Topic>();
-        Iterator<Topic> results = topics.iterator();
+        Iterator<RelatedTopic> results = topics.iterator();
         while ( results.hasNext() ) {
             Topic exercise = results.next();
             // get author to circumvent "double excercise-objects"-bug occured since using dm4-webclient
@@ -216,9 +210,9 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
         if (!ws.isAssignedToWorkspace(user, editorsWs.getId())) {
             throw new WebApplicationException(401);
         }
-        ResultSet<Topic> topics = dms.getTopics("tub.eduzen.excercise", false, 0, null); // no limit, slim fetch all
+        ResultSet<RelatedTopic> topics = dms.getTopics("tub.eduzen.excercise", false, 0, null); // no limit, slim fetch all
         Set<Topic> resultset = new LinkedHashSet<Topic>();
-        Iterator<Topic> results = topics.iterator();
+        Iterator<RelatedTopic> results = topics.iterator();
         while ( results.hasNext() ) {
             Topic exercise = results.next();
             // get author to circumvent "double excercise-objects"-bug occured since using dm4-webclient
@@ -500,7 +494,11 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     /** --- Implementing PluginService Interfaces to consume AccessControlService --- */
 
     @Override
-    public void pluginServiceArrived(PluginService service) {
+    @ConsumesService({
+        "de.deepamehta.plugins.accesscontrol.service.AccessControlService",
+        "de.deepamehta.plugins.workspaces.service.WorkspacesService"
+    })
+    public void serviceArrived(PluginService service) {
         if (service instanceof AccessControlService) {
             acl = (AccessControlService) service;
         } else if (service instanceof WorkspacesService) {
@@ -509,7 +507,11 @@ public class EduzenPlugin extends PluginActivator implements EduzenService, Plug
     }
 
     @Override
-    public void pluginServiceGone(PluginService service) {
+    @ConsumesService({
+        "de.deepamehta.plugins.accesscontrol.service.AccessControlService",
+        "de.deepamehta.plugins.workspaces.service.WorkspacesService"
+    })
+    public void serviceGone(PluginService service) {
         if (service == acl) {
             acl = null;
         } else if (service == ws) {
