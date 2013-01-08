@@ -8,6 +8,8 @@ Project Website: <http://web.eduzen.tu-berlin.de>
 
 # Changelog
 
+0.3.0-SNAPSHOT, January, 2013
+
 0.2.0-SNAPSHOT, Oct 05, 2012:
 
 - moved mathjax integration to it`s own plugin <https://github.com/mukil/dm4-mathjax-renderer>
