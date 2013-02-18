@@ -1,12 +1,23 @@
 # EducationZEN Application
 
-The eduZEN-Application is realised as a plugin for the DeepaMehta<https://github.com/jri/deepamehta> software platform.
+The eduZEN-Application is realised as a plugin for the DeepaMehta <https://github.com/jri/deepamehta> software platform.
 
 It`s aim is to support the reformation and efficiency of scientific tutorials held in higher education through delivering useful day-to-day functionality supporting _learning_ and _teaching_ (with the utmost respect to) any subject of interest and (with the upmost ruggedness to) any given learner.
 
 Project Website: <http://web.eduzen.tu-berlin.de>
 
+# Installation & Usage
+
+This bundle ships and installs the eduZEN-Application model with it's corresponding restful webservice implementation.
+
+To be fully-featured, additionally install our LaTeX-Renderer (from repo:mukil/dm4-mathjax-renderer) and the prototypical customized user interface (from repo:mukil/eduzen-views).
+
+For usage hints and testing purposes of the customi user interface for the eduZEN-Application, see repo:eduzen-views.
+
 # Changelog
+
+1.0-SNAPSHOT, Feb 18, 2013:
+- based on the latest deepamehta-4.0.14 release
 
 0.3.0-SNAPSHOT, January, 2013
 
