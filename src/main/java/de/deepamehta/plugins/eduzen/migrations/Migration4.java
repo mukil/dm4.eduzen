@@ -14,8 +14,9 @@ public class Migration4 extends Migration {
     @Override
     public void run() {
 
+        /** This is obsolete when starting with 4.0.14 */
         // set new role URIs
-        Topic creatorRole = dms.getTopic("uri", new SimpleValue("dm4.accesscontrol.role_creator"), false, null);
+        /* Topic creatorRole = dms.getTopic("uri", new SimpleValue("dm4.accesscontrol.role_creator"), false, null);
         creatorRole.setUri("dm4.accesscontrol.user_role.creator");
         Topic ownerRole = dms.getTopic("uri", new SimpleValue("dm4.accesscontrol.role_owner"), false, null);
         ownerRole.setUri("dm4.accesscontrol.user_role.owner");
@@ -32,10 +33,10 @@ public class Migration4 extends Migration {
         Topic createOperation = dms.getTopic("uri", new SimpleValue("dm4.accesscontrol.operation_create"), false, null);
         createOperation.setUri("dm4.accesscontrol.operation.create");
 
-        // update topictype 
+        // update topictype
         TopicType roleType = dms.getTopicType("dm4.accesscontrol.role", null);
         roleType.setUri("dm4.accesscontrol.user_role");
-        roleType.setSimpleValue("User Role");
+        roleType.setSimpleValue("User Role"); **/
     }
 
 }

@@ -1,21 +1,11 @@
 package de.deepamehta.plugins.eduzen.migrations;
 
-import java.util.List;
-import java.util.logging.Logger;
-
+import de.deepamehta.core.AssociationType;
 import de.deepamehta.core.Topic;
 import de.deepamehta.core.TopicType;
-import de.deepamehta.core.AssociationType;
-import de.deepamehta.core.RelatedTopic;
-import de.deepamehta.core.ResultSet;
-import de.deepamehta.core.model.CompositeValue;
-import de.deepamehta.core.model.AssociationDefinitionModel;
-import de.deepamehta.core.model.AssociationTypeModel;
-import de.deepamehta.core.model.AssociationModel;
-import de.deepamehta.core.model.TopicTypeModel;
-import de.deepamehta.core.model.TopicRoleModel;
-import de.deepamehta.core.model.TopicModel;
+import de.deepamehta.core.model.*;
 import de.deepamehta.core.service.Migration;
+import java.util.logging.Logger;
 
 
 
@@ -23,19 +13,20 @@ public class Migration7 extends Migration {
 
     private Logger logger = Logger.getLogger(getClass().getName());
 
-    private long WORKSPACE_ID = 9676;
+    private String DEFAULT_URI = "de.workspaces.deepamehta";
+    private String EDUZEN_EDITORS_URI = "tub.eduzen.workspace_editors";
 
     // -------------------------------------------------------------------------------------------------- Public Methods
 
     @Override
     public void run() {
 
-        // 1) set URI for default Workspace
-        Topic defaultWorkspace = dms.getTopic(WORKSPACE_ID, false, null);
-        defaultWorkspace.setUri("tub.eduzen.workspace_editors");
+        // 1) set new URI for default Workspace
+        Topic defaultWorkspace = dms.getTopic("uri", new SimpleValue(DEFAULT_URI), false, null);
+        defaultWorkspace.setUri(EDUZEN_EDITORS_URI);
 
         // 2) create new "EduZEN"-Workspace for users
-        dms.createTopic(new TopicModel("tub.eduzen.workspace_users", "dm4.workspaces.workspace", 
+        dms.createTopic(new TopicModel("tub.eduzen.workspace_users", "dm4.workspaces.workspace",
             new CompositeValue().put("dm4.workspaces.name", "EduZEN Users")), null);
 
         // 3) assign all existing eduzen topic types to "EduZEN Editors"-Workspace
@@ -151,7 +142,7 @@ public class Migration7 extends Migration {
         AssociationType lectureContent = dms.createAssociationType(
           new AssociationTypeModel("tub.eduzen.lecture_content", "Lecture Content", "dm4.core.composite"), null);
         // create Topic Type "Ordinal Number" (Datatype: "Number")
-        TopicType ordinalNumber = dms.createTopicType(new TopicTypeModel("tub.eduzen.ordinal_number", 
+        TopicType ordinalNumber = dms.createTopicType(new TopicTypeModel("tub.eduzen.ordinal_number",
             "Ordinal Number", "dm4.core.number"), null);
         // build assoc-type composed of a one relation to "tub.eduzen.ordinal_number", needed as assocs-default-label
         AssociationDefinitionModel assocDefModel1 = new AssociationDefinitionModel("dm4.core.composition_def",
@@ -161,11 +152,11 @@ public class Migration7 extends Migration {
         AssociationDefinitionModel assocDefModel2 = new AssociationDefinitionModel("dm4.core.aggregation_def",
             "tub.eduzen.lecture_content", "tub.eduzen.excercise_text", "dm4.core.one", "dm4.core.many");
         // set multi_renderer on assoc-type-def to enable managing aggregated excercise-texts in association editor
-        assocDefModel2.getViewConfigModel().addSetting("dm4.webclient.view_config", 
+        assocDefModel2.getViewConfigModel().addSetting("dm4.webclient.view_config",
             "dm4.webclient.multi_renderer_uri", "dm4.webclient.checkbox_renderer");
         lectureContent.addAssocDef(assocDefModel2);
         // update view-config of assoctype
-        lectureContent.getViewConfig().addSetting("dm4.webclient.view_config", "dm4.webclient.color", "#1072c8");        
+        lectureContent.getViewConfig().addSetting("dm4.webclient.view_config", "dm4.webclient.color", "#1072c8");
         // assign to workspace_editors
         assignWorkspace(lectureContent);
     }
@@ -177,9 +168,10 @@ public class Migration7 extends Migration {
         if (hasWorkspace(topic)) {
             return;
         }
+        Topic defaultWorkspace = dms.getTopic("uri", new SimpleValue(EDUZEN_EDITORS_URI), false, null);
         dms.createAssociation(new AssociationModel("dm4.core.aggregation",
             new TopicRoleModel(topic.getId(), "dm4.core.whole"),
-            new TopicRoleModel(WORKSPACE_ID, "dm4.core.part")
+            new TopicRoleModel(defaultWorkspace.getId(), "dm4.core.part")
         ), null);
     }
 

@@ -1,16 +1,13 @@
 package de.deepamehta.plugins.eduzen.model;
 
-import static de.deepamehta.plugins.eduzen.model.ResourceTopic.*;
 
-import org.codehaus.jettison.json.JSONObject;
-
-import de.deepamehta.core.DeepaMehtaTransaction;
 import de.deepamehta.core.JSONEnabled;
 import de.deepamehta.core.Topic;
-import de.deepamehta.core.model.SimpleValue;
 import de.deepamehta.core.model.TopicModel;
 import de.deepamehta.core.service.ClientState;
 import de.deepamehta.core.service.DeepaMehtaService;
+import static de.deepamehta.plugins.eduzen.model.ResourceTopic.*;
+import org.codehaus.jettison.json.JSONObject;
 
 /**
  * A domain model class that wraps the underlying <code>Topic</code>.
@@ -40,7 +37,7 @@ public class Resource implements JSONEnabled {
     public JSONObject toJSON() {
         return topic.toJSON();
     }
-    
+
     // ------------------------------ simplified aggregated 1to1 composite access
 
     public String getFile() {
@@ -62,14 +59,14 @@ public class Resource implements JSONEnabled {
     }
 
     // ------------------------------ private helper
-    
-    
+
+
     private TopicModel getContentURL() {
         // ### content_items = dms.getRelatedTopics(CONTENT_EDGE, WEB_RESOURCE);
         return topic.getCompositeValue().getTopic(URL);
     }
-    
-    
+
+
     private TopicModel getFileTopic() {
         // ### content_items = dms.getRelatedTopics(CONTENT_EDGE, FILE);
         return topic.getCompositeValue().getTopic(FILE);

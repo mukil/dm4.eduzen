@@ -20,7 +20,7 @@ public class Migration5 extends Migration {
 
     private Logger logger = Logger.getLogger(getClass().getName());
 
-    private long WORKSPACE_ID = 9676;
+    private String DEFAULT_URI = "de.workspaces.deepamehta";
 
     // -------------------------------------------------------------------------------------------------- Public Methods
 
@@ -28,7 +28,7 @@ public class Migration5 extends Migration {
     public void run() {
 
         // rename default Workspace
-        Topic defaultWorkspace = dms.getTopic(WORKSPACE_ID, false, null);
+        Topic defaultWorkspace = dms.getTopic("uri", new SimpleValue(DEFAULT_URI), false, null);
         // setChildTopicvalue just works if there is a "one" relation present
         defaultWorkspace.setChildTopicValue("dm4.workspaces.name", new SimpleValue("EduZEN Editors"));
         // defaultWorkspace.setUri("de.workspaces.deepamehta");
@@ -37,18 +37,21 @@ public class Migration5 extends Migration {
         ResultSet<RelatedTopic> topics = defaultWorkspace.getRelatedTopics("dm4.workspaces.workspace_context",
             "dm4.core.default", null, null, false, false, 0, null);
         for (RelatedTopic topic : topics) {
-            topic.getAssociation().update(new AssociationModel("dm4.core.aggregation",
+            // probably irrelevant now: topic.getAssociation("dm4.workspaces.workspace_context", "dm4.core.default");
+            topic.getRelatingAssociation().update(new AssociationModel("dm4.core.aggregation",
                 new TopicRoleModel(defaultWorkspace.getId(), "dm4.core.part"),
                 new TopicRoleModel(topic.getId(), "dm4.core.whole")
             ), null, new Directives());
         }
 
         // delete deprecated association type and two deprecated topic instances
-        dms.getAssociationType("dm4.workspaces.workspace_context", null).delete(new Directives());
+        // deprecated association type is well, deprecated as of 4.0.14
+        /** dms.getAssociationType("dm4.workspaces.workspace_context", null).delete(new Directives());
         dms.getTopic("uri", new SimpleValue("dm4.workspaces.workspace_topic"), false, null).delete(new Directives());
-        dms.getTopic("uri", new SimpleValue("dm4.workspaces.workspace_type"), false, null).delete(new Directives());
+        dms.getTopic("uri", new SimpleValue("dm4.workspaces.workspace_type"), false, null).delete(new Directives()); **/
 
         // fetch and relate username "admin" to at least one workspace (we use here "9676" the "EduZEN Editors")
+        /** assuming that this fix is also not needed anymore **/
         Topic admin = dms.getTopic("dm4.accesscontrol.username", new SimpleValue("admin"), false, null);
         if (admin == null) throw new RuntimeException("could not fetch admin by uri \"dm4.accesscontrol.username\"");
         //
