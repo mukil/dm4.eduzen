@@ -13,8 +13,8 @@ public class Migration7 extends Migration {
 
     private Logger logger = Logger.getLogger(getClass().getName());
 
-    private String DEFAULT_URI = "de.workspaces.deepamehta";
-    private String EDUZEN_EDITORS_URI = "tub.eduzen.workspace_editors";
+    private String WS_DEFAULT_URI = "de.workspaces.deepamehta";
+    // it is not allowed to change the uri of the default workspace...
 
     // -------------------------------------------------------------------------------------------------- Public Methods
 
@@ -22,12 +22,11 @@ public class Migration7 extends Migration {
     public void run() {
 
         // 1) set new URI for default Workspace
-        Topic defaultWorkspace = dms.getTopic("uri", new SimpleValue(DEFAULT_URI), false, null);
-        defaultWorkspace.setUri(EDUZEN_EDITORS_URI);
+        Topic defaultWorkspace = dms.getTopic("uri", new SimpleValue(WS_DEFAULT_URI), false, null);
 
         // 2) create new "EduZEN"-Workspace for users
         dms.createTopic(new TopicModel("tub.eduzen.workspace_users", "dm4.workspaces.workspace",
-            new CompositeValue().put("dm4.workspaces.name", "EduZEN Users")), null);
+            new CompositeValueModel().put("dm4.workspaces.name", "EduZEN Users")), null);
 
         // 3) assign all existing eduzen topic types to "EduZEN Editors"-Workspace
         TopicType studyPathName = dms.getTopicType("tub.eduzen.studypath_name", null);
@@ -168,7 +167,7 @@ public class Migration7 extends Migration {
         if (hasWorkspace(topic)) {
             return;
         }
-        Topic defaultWorkspace = dms.getTopic("uri", new SimpleValue(EDUZEN_EDITORS_URI), false, null);
+        Topic defaultWorkspace = dms.getTopic("uri", new SimpleValue(WS_DEFAULT_URI), false, null);
         dms.createAssociation(new AssociationModel("dm4.core.aggregation",
             new TopicRoleModel(topic.getId(), "dm4.core.whole"),
             new TopicRoleModel(defaultWorkspace.getId(), "dm4.core.part")

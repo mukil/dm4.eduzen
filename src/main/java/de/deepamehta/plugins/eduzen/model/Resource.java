@@ -63,21 +63,21 @@ public class Resource implements JSONEnabled {
 
     private TopicModel getContentURL() {
         // ### content_items = dms.getRelatedTopics(CONTENT_EDGE, WEB_RESOURCE);
-        return topic.getCompositeValue().getTopic(URL);
+        return topic.getModel().getCompositeValueModel().getTopic(URL);
     }
 
 
     private TopicModel getFileTopic() {
         // ### content_items = dms.getRelatedTopics(CONTENT_EDGE, FILE);
-        return topic.getCompositeValue().getTopic(FILE);
+        return topic.getModel().getCompositeValueModel().getTopic(FILE);
     }
 
     private TopicModel getContentTopic() {
-        return topic.getCompositeValue().getTopic(CONTENT);
+        return topic.getModel().getCompositeValueModel().getTopic(CONTENT);
     }
 
     private TopicModel getNameTopic() {
-        return topic.getCompositeValue().getTopic(NAME);
+        return topic.getModel().getCompositeValueModel().getTopic(NAME);
     }
 
 }

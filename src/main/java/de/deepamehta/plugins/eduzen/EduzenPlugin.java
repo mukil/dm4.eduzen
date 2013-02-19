@@ -42,7 +42,7 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
     private WorkspacesService ws;
 
     // Approach/ Excercise States (double check: URIs should be as in "tub.eduzen.comment")
-    private static final String UNTOUCHED = "tub.eduzen.untouched"; // exercise not yet approached 
+    private static final String UNTOUCHED = "tub.eduzen.untouched"; // exercise not yet approached
     private static final String UNDECIDED = "tub.eduzen.undecided";
     private static final String CORRECT = "tub.eduzen.correct";
     private static final String WRONG = "tub.eduzen.wrong";
@@ -51,6 +51,9 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
     private static final String IN_PROGRESS = "tub.eduzen.in_progress";
     private static final String SOLVED = "tub.eduzen.solved";
     private static final String UNSOLVED = "tub.eduzen.unsolved";
+
+    private static final String WS_EDUZEN_EDITORS = "de.workspaces.deepamehta";
+    private static final String WS_EDUZEN_USERS = "tub.eduzen.workspace_users";
 
     public EduzenPlugin() {
         log.info(".stdOut(\"Hello Zen-Master!\")");
@@ -73,7 +76,9 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
         }
     }
 
-    /** Returning all exercises submitted by a "tub.eduzen.identity" with exactly one uncommented approach. */
+    /** Returning all exercises submitted by a "tub.eduzen.identity" with exactly one uncommented approach.
+     *  This service method is currently deprecated by user-request/unused.
+     */
 
     @GET
     @Path("/exercises/new")
@@ -83,8 +88,8 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
         Topic user = null;
 	      String username = acl.getUsername();
 	      if (username != null) user = acl.getUsername(username);
-        Topic editorsWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_editors"), true, null);
-        Topic membersWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_users"), true, null);
+        Topic editorsWs = dms.getTopic("uri", new SimpleValue(WS_EDUZEN_EDITORS), true, null);
+        Topic membersWs = dms.getTopic("uri", new SimpleValue(WS_EDUZEN_USERS), true, null);
         if (!ws.isAssignedToWorkspace(user, editorsWs.getId())) {
             throw new WebApplicationException(401);
         }
@@ -94,17 +99,17 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
         while ( results.hasNext() ) {
             Topic exercise = results.next();
             // get author to circumvent "double excercise-objects"-bug
-            Topic author = exercise.getRelatedTopic("tub.eduzen.submitter", "dm4.core.default", 
+            Topic author = exercise.getRelatedTopic("tub.eduzen.submitter", "dm4.core.default",
               "dm4.core.default", "tub.eduzen.identity", false, false, null);
             // query for approaches without comments
-            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.whole", 
+            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.whole",
               "dm4.core.part", "tub.eduzen.approach", false, true, 100, null);
             Iterator<RelatedTopic> approaches = approached.iterator();
             if (author != null) {
                 if (approached.getSize() == 1) {
                   while ( approaches.hasNext() ) {
                       RelatedTopic approach = approaches.next();
-                      ResultSet<RelatedTopic> commented = approach.getRelatedTopics("dm4.core.composition", 
+                      ResultSet<RelatedTopic> commented = approach.getRelatedTopics("dm4.core.composition",
                           "dm4.core.whole", "dm4.core.part", "tub.eduzen.comment", false, false, 0, null);
                       if (commented.getSize() == 0) {
                           // so, we are adding a fat exercise object to the results if first approach is yet uncommented
@@ -127,8 +132,8 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
         Topic user = null;
 	      String username = acl.getUsername();
 	      if (username != null) user = acl.getUsername(username);
-        Topic editorsWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_editors"), true, null);
-        Topic membersWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_users"), true, null);
+        Topic editorsWs = dms.getTopic("uri", new SimpleValue(WS_EDUZEN_EDITORS), true, null);
+        Topic membersWs = dms.getTopic("uri", new SimpleValue(WS_EDUZEN_USERS), true, null);
         if (!ws.isAssignedToWorkspace(user, editorsWs.getId())) {
             throw new WebApplicationException(401);
         }
@@ -138,17 +143,17 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
         while ( results.hasNext() ) {
             Topic exercise = results.next();
             // get author to circumvent "double excercise-objects"-bug
-            Topic author = exercise.getRelatedTopic("tub.eduzen.submitter", "dm4.core.default", 
+            Topic author = exercise.getRelatedTopic("tub.eduzen.submitter", "dm4.core.default",
               "dm4.core.default", "tub.eduzen.identity", false, false, null);
             // query for approaches without comments
-            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.whole", 
+            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.whole",
               "dm4.core.part", "tub.eduzen.approach", false, true, 100, null);
             Iterator<RelatedTopic> approaches = approached.iterator();
             if (author != null) {
                 while ( approaches.hasNext() ) {
                     // in the beginning we may be just interested in the very first appr. - overhead (?)
                     RelatedTopic approach = approaches.next();
-                    ResultSet<RelatedTopic> commented = approach.getRelatedTopics("dm4.core.composition", 
+                    ResultSet<RelatedTopic> commented = approach.getRelatedTopics("dm4.core.composition",
                         "dm4.core.whole", "dm4.core.part", "tub.eduzen.comment", false, false, 0, null);
                     if (commented.getSize() == 0) {
                         // so, we are adding a fat exercise object to the results if any approach is yet uncommented
@@ -170,8 +175,8 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
         Topic user = null;
 	      String username = acl.getUsername();
 	      if (username != null) user = acl.getUsername(username);
-        Topic editorsWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_editors"), true, null);
-        Topic membersWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_users"), true, null);
+        Topic editorsWs = dms.getTopic("uri", new SimpleValue(WS_EDUZEN_EDITORS), true, null);
+        Topic membersWs = dms.getTopic("uri", new SimpleValue(WS_EDUZEN_USERS), true, null);
         if (!ws.isAssignedToWorkspace(user, editorsWs.getId())) {
             throw new WebApplicationException(401);
         }
@@ -181,9 +186,9 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
         while ( results.hasNext() ) {
             Topic exercise = results.next();
             // get author to circumvent "double excercise-objects"-bug occured since using dm4-webclient
-            Topic author = exercise.getRelatedTopic("tub.eduzen.submitter", "dm4.core.default", 
+            Topic author = exercise.getRelatedTopic("tub.eduzen.submitter", "dm4.core.default",
               "dm4.core.default", "tub.eduzen.identity", false, false, null);
-            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.whole", 
+            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.whole",
               "dm4.core.part", "tub.eduzen.approach", false, false, 1, null);
             if (author != null) { // exercies was most probably taken by a user (not an editor using dm4-webclient)
                 if (approached.getSize() == 0) {
@@ -203,10 +208,10 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
     public ResultSet<Topic> getAllExercises(@HeaderParam("Cookie") ClientState clientState) {
 
         Topic user = null;
-	      String username = acl.getUsername();
-	      if (username != null) user = acl.getUsername(username);
-        Topic editorsWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_editors"), true, null);
-        Topic membersWs = dms.getTopic("uri", new SimpleValue("tub.eduzen.workspace_users"), true, null);
+	    String username = acl.getUsername();
+	    if (username != null) user = acl.getUsername(username);
+        Topic editorsWs = dms.getTopic("uri", new SimpleValue(WS_EDUZEN_EDITORS), true, null);
+        Topic membersWs = dms.getTopic("uri", new SimpleValue(WS_EDUZEN_USERS), true, null);
         if (!ws.isAssignedToWorkspace(user, editorsWs.getId())) {
             throw new WebApplicationException(401);
         }
@@ -216,9 +221,9 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
         while ( results.hasNext() ) {
             Topic exercise = results.next();
             // get author to circumvent "double excercise-objects"-bug occured since using dm4-webclient
-            Topic author = exercise.getRelatedTopic("tub.eduzen.submitter", "dm4.core.default", 
+            Topic author = exercise.getRelatedTopic("tub.eduzen.submitter", "dm4.core.default",
               "dm4.core.default", "tub.eduzen.identity", false, false, null);
-            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.whole", 
+            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.whole",
               "dm4.core.part", "tub.eduzen.approach", false, false, 1, null);
             if (author != null) { // exercies was most probably taken by a user (not an editor using dm4-webclient)
                 if ( approached.getSize() > 0) {
@@ -232,13 +237,13 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
 
     /**
      * Experimental Server Method that shall find an exercise-object for our use and an exercise-text.
-     * Input: Excercise Text (Quest), Output: Unseen/new Excercise-Object for current user 
+     * Input: Excercise Text (Quest), Output: Unseen/new Excercise-Object for current user
      */
 
     @GET
     @Path("/exercise-object/{exerciseTextId}")
     @Override
-    public ResultSet<RelatedTopic> getExerciseObjects(@PathParam("exerciseTextId") long exerciseTextId, 
+    public ResultSet<RelatedTopic> getExerciseObjects(@PathParam("exerciseTextId") long exerciseTextId,
                                     @HeaderParam("Cookie") ClientState clientState) {
         Topic user = null;
 	      String username = acl.getUsername();
@@ -246,20 +251,20 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
         Topic tub = getTUBIdentity(user);
         log.info("Finding an exercise-object for exercise-text ("+ exerciseTextId +") + user " + user.getSimpleValue());
         Set<RelatedTopic> remainingObjects = new LinkedHashSet<RelatedTopic>();
-        ResultSet<RelatedTopic> takenExercises = tub.getRelatedTopics("tub.eduzen.submitter", 
+        ResultSet<RelatedTopic> takenExercises = tub.getRelatedTopics("tub.eduzen.submitter",
             "dm4.core.default", "dm4.core.default", "tub.eduzen.excercise", false, false, 0, null);
 
         Topic exerciseText = dms.getTopic(exerciseTextId, true, null);
-        ResultSet<RelatedTopic> compatibleObjects = exerciseText.getRelatedTopics("tub.eduzen.compatible", 
+        ResultSet<RelatedTopic> compatibleObjects = exerciseText.getRelatedTopics("tub.eduzen.compatible",
             "dm4.core.default", "dm4.core.default", "tub.eduzen.excercise_object", false, false, 0, null);
 
         Set<RelatedTopic> exercisesForThisQuest = new LinkedHashSet<RelatedTopic>();
-        Iterator<RelatedTopic> exercises = takenExercises.iterator();        
+        Iterator<RelatedTopic> exercises = takenExercises.iterator();
         //  we now have at hand all excercises taken by our user, strip down to the ones taken for this excercise-text
         while (exercises.hasNext()) {
             RelatedTopic takenExercise = exercises.next();
             Topic e = dms.getTopic(takenExercise.getId(), true, null);
-            TopicModel onceTakenQuest = e.getCompositeValue().getTopic("tub.eduzen.excercise_text");
+            TopicModel onceTakenQuest = e.getModel().getCompositeValueModel().getTopic("tub.eduzen.excercise_text");
             if (onceTakenQuest.getId() == exerciseText.getId()) {
                 exercisesForThisQuest.add(takenExercise);
             }
@@ -271,7 +276,7 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
             log.info("  returning all compatbile exercise-objects for this excercise-text");
             return compatibleObjects;
         }
-        // 
+        //
         Iterator<RelatedTopic> compatibles = compatibleObjects.iterator();
         log.info("  found " + compatibleObjects.getSize() + " compatible excercise-objects overall");
         while (compatibles.hasNext()) {
@@ -281,7 +286,8 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
             while (taken.hasNext()) {
                 RelatedTopic exercise = taken.next();
                 Topic o = dms.getTopic(exercise.getId(), true, null);
-                TopicModel onceTakenObject = o.getCompositeValue().getTopic("tub.eduzen.excercise_object");
+                TopicModel onceTakenObject = o.getModel().getCompositeValueModel()
+                    .getTopic("tub.eduzen.excercise_object");
                 // dont take the ones already taken
                 if (onceTakenObject.getId() == compatibleObject.getId()) {
                     log.info("    strippin: "+ user.getSimpleValue() +" already worked with exercise-object "
@@ -301,7 +307,7 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
     @GET
     @Path("/state/exercise/{exerciseId}")
     @Override
-    public String getExerciseState(@PathParam("exerciseId") long exerciseId, 
+    public String getExerciseState(@PathParam("exerciseId") long exerciseId,
                                     @HeaderParam("Cookie") ClientState clientState) {
         Topic user = null;
 	      String username = acl.getUsername();
@@ -310,10 +316,10 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
         if (user == null) throw new WebApplicationException(401);
         Topic exercise = dms.getTopic(exerciseId, true, null);
         if (exercise.getCompositeValue().has("tub.eduzen.approach")) {
-            List<TopicModel> approaches = exercise.getCompositeValue().getTopics("tub.eduzen.approach");
+            List<TopicModel> approaches = exercise.getModel().getCompositeValueModel().getTopics("tub.eduzen.approach");
             int bunchOfTrues = 0;
             int bunchOfFalses = 0;
-            // 
+            //
             Iterator<TopicModel> results = approaches.iterator();
             while (results.hasNext()) {
                 TopicModel approachModel = results.next();
@@ -360,7 +366,7 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
     @GET
     @Path("/state/exercise-text/{exerciseTextId}")
     @Override
-    public String getExerciseTextState(@PathParam("exerciseTextId") long exerciseTextId, 
+    public String getExerciseTextState(@PathParam("exerciseTextId") long exerciseTextId,
                                     @HeaderParam("Cookie") ClientState clientState) {
         Topic user = null;
 	      String username = acl.getUsername();
@@ -369,17 +375,18 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
         String status = UNSOLVED;
         if (user == null || tub == null) throw new WebApplicationException(401);
         Topic exerciseText = dms.getTopic(exerciseTextId, true, null);
-        ResultSet<RelatedTopic> excercises = tub.getRelatedTopics("tub.eduzen.submitter", "dm4.core.default", 
+        ResultSet<RelatedTopic> excercises = tub.getRelatedTopics("tub.eduzen.submitter", "dm4.core.default",
             "dm4.core.default", "tub.eduzen.excercise", true, false, 0, null);
         Iterator<RelatedTopic> results = excercises.iterator();
         while (results.hasNext()) {
             RelatedTopic excercise = results.next();
-            // 
+            //
             if (excercise.getCompositeValue().getTopic("tub.eduzen.excercise_text").getId() == exerciseTextId) {
                 if (excercise.getCompositeValue().has("tub.eduzen.approach")) {
                     String excerciseState = checkStateOfExercise(excercise);
                     if (excerciseState == CORRECT) {
-                        List<TopicModel> approaches = excercise.getCompositeValue().getTopics("tub.eduzen.approach");
+                        List<TopicModel> approaches = excercise.getModel()
+                            .getCompositeValueModel().getTopics("tub.eduzen.approach");
                         if (approaches.size() == 1) {
                             // this excercise was correct with its first approach, then quest is solved
                             // FIXME: sort by time, to know which one was the first appraoch.
@@ -406,7 +413,7 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
     @GET
     @Path("/state/approach/{approachId}")
     @Override
-    public String getApproachState(@PathParam("approachId") long approachId, 
+    public String getApproachState(@PathParam("approachId") long approachId,
                                     @HeaderParam("Cookie") ClientState clientState) {
         Topic user = null;
         String username = acl.getUsername();
@@ -424,7 +431,7 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
     /** returns either "tub.eduzen.undecided", "tub.eduzen.correct" or "tub.eduzen.wrong" */
     private String checkStateOfApproach(Topic approach) {
         String status = UNDECIDED;
-        ResultSet<RelatedTopic> comments = approach.getRelatedTopics("dm4.core.composition", "dm4.core.whole", 
+        ResultSet<RelatedTopic> comments = approach.getRelatedTopics("dm4.core.composition", "dm4.core.whole",
             "dm4.core.part", "tub.eduzen.comment", false, false, 0, null);
         int bunchOfTrues = 0;
         int bunchOfFalses = 0;
@@ -433,8 +440,9 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
             RelatedTopic relatedComment = results.next();
             Topic comment = dms.getTopic(relatedComment.getId(), true, null);
             try {
-                boolean commentValue = comment.getCompositeValue().getTopic("tub.eduzen.comment_correct")
-                    .getSimpleValue().booleanValue(); // in JSON debug output syntax there is written value="false"
+                // in JSON debug output syntax there is written value="false"
+                boolean commentValue = comment.getModel().getCompositeValueModel()
+                    .getTopic("tub.eduzen.comment_correct").getSimpleValue().booleanValue();
                 if (commentValue) {
                     bunchOfTrues++;
                 } else {
@@ -459,8 +467,8 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
 
     /** returns either "tub.eduzen.undecided", "tub.eduzen.correct" or "tub.eduzen.wrong" */
     private String checkStateOfExercise(Topic exercise) {
-        List<TopicModel> approaches = exercise.getCompositeValue().getTopics("tub.eduzen.approach");
-        // 
+        List<TopicModel> approaches = exercise.getModel().getCompositeValueModel().getTopics("tub.eduzen.approach");
+        //
         Iterator<TopicModel> results = approaches.iterator();
         int bunchOfCorrects = 0;
         int bunchOfWrongs = 0;
@@ -485,7 +493,7 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
 
     private Topic getTUBIdentity(Topic user) {
         if (user == null) throw new WebApplicationException(401);
-        return user.getRelatedTopic("dm4.core.aggregation", "dm4.core.part", "dm4.core.whole", "tub.eduzen.identity", 
+        return user.getRelatedTopic("dm4.core.aggregation", "dm4.core.part", "dm4.core.whole", "tub.eduzen.identity",
             false, true, null);
     }
 
