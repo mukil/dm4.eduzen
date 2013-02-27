@@ -33,8 +33,8 @@ public class Migration5 extends Migration {
         for (RelatedTopic topic : topics) {
             // probably irrelevant now: topic.getAssociation("dm4.workspaces.workspace_context", "dm4.core.default");
             topic.getRelatingAssociation().update(new AssociationModel("dm4.core.aggregation",
-                new TopicRoleModel(defaultWorkspace.getId(), "dm4.core.part"),
-                new TopicRoleModel(topic.getId(), "dm4.core.whole")
+                new TopicRoleModel(defaultWorkspace.getId(), "dm4.core.child"),
+                new TopicRoleModel(topic.getId(), "dm4.core.parent")
             ), null, new Directives());
         } **/
 

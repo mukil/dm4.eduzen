@@ -169,13 +169,13 @@ public class Migration7 extends Migration {
         }
         Topic defaultWorkspace = dms.getTopic("uri", new SimpleValue(WS_DEFAULT_URI), false, null);
         dms.createAssociation(new AssociationModel("dm4.core.aggregation",
-            new TopicRoleModel(topic.getId(), "dm4.core.whole"),
-            new TopicRoleModel(defaultWorkspace.getId(), "dm4.core.part")
+            new TopicRoleModel(topic.getId(), "dm4.core.parent"),
+            new TopicRoleModel(defaultWorkspace.getId(), "dm4.core.child")
         ), null);
     }
 
     private boolean hasWorkspace(Topic topic) {
-        return topic.getRelatedTopics("dm4.core.aggregation", "dm4.core.whole", "dm4.core.part",
+        return topic.getRelatedTopics("dm4.core.aggregation", "dm4.core.parent", "dm4.core.child",
             "dm4.workspaces.workspace", false, false, 0, null).getSize() > 0;
     }
 

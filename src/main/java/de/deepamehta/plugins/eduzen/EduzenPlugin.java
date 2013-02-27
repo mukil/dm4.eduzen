@@ -102,15 +102,15 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
             Topic author = exercise.getRelatedTopic("tub.eduzen.submitter", "dm4.core.default",
               "dm4.core.default", "tub.eduzen.identity", false, false, null);
             // query for approaches without comments
-            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.whole",
-              "dm4.core.part", "tub.eduzen.approach", false, true, 100, null);
+            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.parent",
+              "dm4.core.child", "tub.eduzen.approach", false, true, 100, null);
             Iterator<RelatedTopic> approaches = approached.iterator();
             if (author != null) {
                 if (approached.getSize() == 1) {
                   while ( approaches.hasNext() ) {
                       RelatedTopic approach = approaches.next();
                       ResultSet<RelatedTopic> commented = approach.getRelatedTopics("dm4.core.composition",
-                          "dm4.core.whole", "dm4.core.part", "tub.eduzen.comment", false, false, 0, null);
+                          "dm4.core.parent", "dm4.core.child", "tub.eduzen.comment", false, false, 0, null);
                       if (commented.getSize() == 0) {
                           // so, we are adding a fat exercise object to the results if first approach is yet uncommented
                           resultset.add(dms.getTopic(exercise.getId(), true, null));
@@ -146,15 +146,15 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
             Topic author = exercise.getRelatedTopic("tub.eduzen.submitter", "dm4.core.default",
               "dm4.core.default", "tub.eduzen.identity", false, false, null);
             // query for approaches without comments
-            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.whole",
-              "dm4.core.part", "tub.eduzen.approach", false, true, 100, null);
+            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.parent",
+              "dm4.core.child", "tub.eduzen.approach", false, true, 100, null);
             Iterator<RelatedTopic> approaches = approached.iterator();
             if (author != null) {
                 while ( approaches.hasNext() ) {
                     // in the beginning we may be just interested in the very first appr. - overhead (?)
                     RelatedTopic approach = approaches.next();
                     ResultSet<RelatedTopic> commented = approach.getRelatedTopics("dm4.core.composition",
-                        "dm4.core.whole", "dm4.core.part", "tub.eduzen.comment", false, false, 0, null);
+                        "dm4.core.parent", "dm4.core.child", "tub.eduzen.comment", false, false, 0, null);
                     if (commented.getSize() == 0) {
                         // so, we are adding a fat exercise object to the results if any approach is yet uncommented
                         resultset.add(dms.getTopic(exercise.getId(), true, null));
@@ -188,8 +188,8 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
             // get author to circumvent "double excercise-objects"-bug occured since using dm4-webclient
             Topic author = exercise.getRelatedTopic("tub.eduzen.submitter", "dm4.core.default",
               "dm4.core.default", "tub.eduzen.identity", false, false, null);
-            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.whole",
-              "dm4.core.part", "tub.eduzen.approach", false, false, 1, null);
+            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.parent",
+              "dm4.core.child", "tub.eduzen.approach", false, false, 1, null);
             if (author != null) { // exercies was most probably taken by a user (not an editor using dm4-webclient)
                 if (approached.getSize() == 0) {
                   // in this methods we are interested all taken but un-approached exercises
@@ -223,8 +223,8 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
             // get author to circumvent "double excercise-objects"-bug occured since using dm4-webclient
             Topic author = exercise.getRelatedTopic("tub.eduzen.submitter", "dm4.core.default",
               "dm4.core.default", "tub.eduzen.identity", false, false, null);
-            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.whole",
-              "dm4.core.part", "tub.eduzen.approach", false, false, 1, null);
+            ResultSet<RelatedTopic> approached = exercise.getRelatedTopics("dm4.core.composition", "dm4.core.parent",
+              "dm4.core.child", "tub.eduzen.approach", false, false, 1, null);
             if (author != null) { // exercies was most probably taken by a user (not an editor using dm4-webclient)
                 if ( approached.getSize() > 0) {
                   // in this methods we are interested all taken exercies with at least one approach
@@ -431,8 +431,8 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
     /** returns either "tub.eduzen.undecided", "tub.eduzen.correct" or "tub.eduzen.wrong" */
     private String checkStateOfApproach(Topic approach) {
         String status = UNDECIDED;
-        ResultSet<RelatedTopic> comments = approach.getRelatedTopics("dm4.core.composition", "dm4.core.whole",
-            "dm4.core.part", "tub.eduzen.comment", false, false, 0, null);
+        ResultSet<RelatedTopic> comments = approach.getRelatedTopics("dm4.core.composition", "dm4.core.parent",
+            "dm4.core.child", "tub.eduzen.comment", false, false, 0, null);
         int bunchOfTrues = 0;
         int bunchOfFalses = 0;
         Iterator<RelatedTopic> results = comments.iterator();
@@ -493,7 +493,7 @@ public class EduzenPlugin extends PluginActivator implements EduzenService {
 
     private Topic getTUBIdentity(Topic user) {
         if (user == null) throw new WebApplicationException(401);
-        return user.getRelatedTopic("dm4.core.aggregation", "dm4.core.part", "dm4.core.whole", "tub.eduzen.identity",
+        return user.getRelatedTopic("dm4.core.aggregation", "dm4.core.child", "dm4.core.parent", "tub.eduzen.identity",
             false, true, null);
     }
 
