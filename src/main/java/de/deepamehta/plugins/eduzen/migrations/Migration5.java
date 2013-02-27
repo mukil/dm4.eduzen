@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 
 
 
-
 public class Migration5 extends Migration {
 
     private Logger logger = Logger.getLogger(getClass().getName());
@@ -28,8 +27,8 @@ public class Migration5 extends Migration {
         Topic defaultWorkspace = dms.getTopic("uri", new SimpleValue(DEFAULT_URI), false, null);
         // updating name of the deepamehta default workspace
         defaultWorkspace.getCompositeValue().set("dm4.workspaces.name", "EduZEN Editors", null, new Directives());
-        /** update all associatons to this workspace according to new workspace-assignment in 4.0.12
-        ResultSet<RelatedTopic> topics = defaultWorkspace.getRelatedTopics("dm4.workspaces.workspace_context",
+        // update all associatons to this workspace according to new workspace-assignment in 4.0.12
+        /** ResultSet<RelatedTopic> topics = defaultWorkspace.getRelatedTopics("dm4.workspaces.workspace_context",
             "dm4.core.default", null, null, false, false, 0, null);
         for (RelatedTopic topic : topics) {
             // probably irrelevant now: topic.getAssociation("dm4.workspaces.workspace_context", "dm4.core.default");
@@ -44,16 +43,6 @@ public class Migration5 extends Migration {
         /** dms.getAssociationType("dm4.workspaces.workspace_context", null).delete(new Directives());
         dms.getTopic("uri", new SimpleValue("dm4.workspaces.workspace_topic"), false, null).delete(new Directives());
         dms.getTopic("uri", new SimpleValue("dm4.workspaces.workspace_type"), false, null).delete(new Directives()); **/
-
-        // fetch and relate username "admin" to at least one workspace (we use here "9676" the "EduZEN Editors")
-        // assuming that this fix is also not needed anymore
-        /** Topic admin = dms.getTopic("dm4.accesscontrol.username", new SimpleValue("admin"), false, null);
-        if (admin == null) throw new RuntimeException("could not fetch admin by uri \"dm4.accesscontrol.username\"");
-        //
-        dms.createAssociation(new AssociationModel("dm4.core.aggregation",
-            new TopicRoleModel(defaultWorkspace.getId(), "dm4.core.part"),
-            new TopicRoleModel(admin.getId(), "dm4.core.whole")
-        ), null); **/
     }
 
 }
