@@ -14,12 +14,12 @@ public class Migration3 extends Migration {
     public void run() {
         // hide "Person"-topic from create menu, now needed for start test-drive the dm4-mail plugin
         // dms.getTopicType("dm4.contacts.person", null).getViewConfig()
-            // .addSetting("dm4.webclient.view_config", "dm4.webclient.add_to_create_menu", false);
+            // .addSetting("dm4.webclient.view_config", "dm4.webclient.show_in_create_menu", false);
         dms.getTopicType("dm4.contacts.person", null).getViewConfig()
-            .addSetting("dm4.webclient.view_config", "dm4.webclient.is_searchable_unit", false);
+            .addSetting("dm4.webclient.view_config", "dm4.webclient.searchable_as_unit", false);
         // hide "Institution"-topic from create menu
         dms.getTopicType("dm4.contacts.institution", null).getViewConfig()
-            .addSetting("dm4.webclient.view_config", "dm4.webclient.add_to_create_menu", false);
+            .addSetting("dm4.webclient.view_config", "dm4.webclient.show_in_create_menu", false);
     }
 
 }

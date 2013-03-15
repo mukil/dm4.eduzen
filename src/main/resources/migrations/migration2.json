@@ -19,8 +19,8 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.icon": "/de.tu-berlin.eduzen/images/gnome_stock_person.png",
-                        "dm4.webclient.add_to_create_menu": true,
-                        "dm4.webclient.is_searchable_unit": true
+                        "dm4.webclient.show_in_create_menu": true,
+                        "dm4.webclient.searchable_as_unit": true
                     }
                 }
             ], "label_config": [
@@ -46,8 +46,8 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.icon": "/de.tu-berlin.eduzen/images/Icon_Themenkomplex.png",
-                        "dm4.webclient.add_to_create_menu": true,
-                        "dm4.webclient.is_searchable_unit": true
+                        "dm4.webclient.show_in_create_menu": true,
+                        "dm4.webclient.searchable_as_unit": true
                     }
                 }
             ]
@@ -83,8 +83,8 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.icon": "/de.tu-berlin.eduzen/images/Icon_Kurs.png",
-                        "dm4.webclient.add_to_create_menu": true,
-                        "dm4.webclient.is_searchable_unit": true
+                        "dm4.webclient.show_in_create_menu": true,
+                        "dm4.webclient.searchable_as_unit": true
                     }
                 }
             ]
@@ -109,8 +109,8 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.icon": "/de.tu-berlin.eduzen/images/Icon_Inhalt.png",
-                        "dm4.webclient.add_to_create_menu": true,
-                        "dm4.webclient.is_searchable_unit": true
+                        "dm4.webclient.show_in_create_menu": true,
+                        "dm4.webclient.searchable_as_unit": true
                     }
                 }
             ]
@@ -134,8 +134,8 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.icon": "/de.tu-berlin.eduzen/images/Icon_Kommentar.png",
-                        "dm4.webclient.add_to_create_menu": true,
-                        "dm4.webclient.is_searchable_unit": true
+                        "dm4.webclient.show_in_create_menu": true,
+                        "dm4.webclient.searchable_as_unit": true
                     }
                 }
             ]
@@ -192,8 +192,8 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.icon": "/de.tu-berlin.eduzen/images/Icon_Loesung.png",
-                        "dm4.webclient.add_to_create_menu": true,
-                        "dm4.webclient.is_searchable_unit": true
+                        "dm4.webclient.show_in_create_menu": true,
+                        "dm4.webclient.searchable_as_unit": true
                     }
                 }
             ]
@@ -228,8 +228,8 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.icon": "/de.tu-berlin.eduzen/images/Icon_Aufgabe.png",
-                        "dm4.webclient.add_to_create_menu": true,
-                        "dm4.webclient.is_searchable_unit": true
+                        "dm4.webclient.show_in_create_menu": true,
+                        "dm4.webclient.searchable_as_unit": true
                     }
                 }
             ]
@@ -295,8 +295,8 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.icon": "/de.tu-berlin.eduzen/images/ball-green.png",
-                        "dm4.webclient.add_to_create_menu": true,
-                        "dm4.webclient.is_searchable_unit": true
+                        "dm4.webclient.show_in_create_menu": true,
+                        "dm4.webclient.searchable_as_unit": true
                     }
                 }
             ]
@@ -378,8 +378,8 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.icon": "/de.tu-berlin.eduzen/images/ball-bright-blue.png",
-                        "dm4.webclient.add_to_create_menu": true,
-                        "dm4.webclient.is_searchable_unit": true
+                        "dm4.webclient.show_in_create_menu": true,
+                        "dm4.webclient.searchable_as_unit": true
                     }
                 }
             ]
@@ -412,8 +412,8 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.icon": "/de.tu-berlin.eduzen/images/Icon_Modul.png",
-                        "dm4.webclient.add_to_create_menu": true,
-                        "dm4.webclient.is_searchable_unit": true
+                        "dm4.webclient.show_in_create_menu": true,
+                        "dm4.webclient.searchable_as_unit": true
                     }
                 }
             ]
@@ -446,8 +446,8 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.icon": "/de.tu-berlin.eduzen/images/Icon_Studiengang.png",
-                        "dm4.webclient.add_to_create_menu": true,
-                        "dm4.webclient.is_searchable_unit": true,
+                        "dm4.webclient.show_in_create_menu": true,
+                        "dm4.webclient.searchable_as_unit": true,
                         "dm4.webclient.editable": true,
                         "dm4.webclient.viewable": true
                     }
@@ -493,8 +493,8 @@
                     "type_uri": "dm4.webclient.view_config",
                     "composite": {
                         "dm4.webclient.icon": "/de.tu-berlin.eduzen/images/Icon_Uebungszettel.png",
-                        "dm4.webclient.add_to_create_menu": true,
-                        "dm4.webclient.is_searchable_unit": true
+                        "dm4.webclient.show_in_create_menu": true,
+                        "dm4.webclient.searchable_as_unit": true
                     }
                 }
             ]
