@@ -132,8 +132,10 @@ public class Migration7 extends Migration {
         // 4) Enrich TUB Identity Topic about username and mailbox fields
         // fixme: cannot create new AssocDefModel via this call with a new ViewConfig (editable=false)
         // fixme: cannot be edited, does this new assoc also needs to be associated with a workspace, if so, how?
-        identity.addAssocDef(new AssociationDefinitionModel("dm4.core.aggregation_def",
-            "tub.eduzen.identity", "dm4.accesscontrol.username", "dm4.core.one", "dm4.core.one"));
+        AssociationDefinitionModel userNameEdge = new AssociationDefinitionModel("dm4.core.aggregation_def",
+            "tub.eduzen.identity", "dm4.accesscontrol.username", "dm4.core.one", "dm4.core.one");
+        userNameEdge.getViewConfigModel().addSetting("dm4.webclient.view_config", "dm4.webclient.locked", false);
+        identity.addAssocDef(userNameEdge);
         identity.addAssocDef(new AssociationDefinitionModel("dm4.core.aggregation_def",
             "tub.eduzen.identity", "dm4.contacts.email_address", "dm4.core.one", "dm4.core.one"));
 
